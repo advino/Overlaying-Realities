@@ -40,10 +40,17 @@ navigator.mediaDevices.getUserMedia(constraints).then(function success(stream) {
 	video.srcObject = stream;
 });
 
-video.addEventListener('click', function() {
-  
+
+var fullScreen = document.createElement('button');
+
+document.body.appendChild(fullScreen);
+fullScreen.innerHTML = "FullScreen";
+
+fullScreen.addEventListener('click', function(){
+
   video.webkitEnterFullScreen();
 });
+
 
 document.body.appendChild(video);
 
