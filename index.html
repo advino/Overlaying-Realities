@@ -10,7 +10,7 @@
 
 </head>
 
-<body>
+<body translate="no">
 
 
 
@@ -26,7 +26,7 @@ video.setAttribute('autoplay', '');
 video.setAttribute('muted', '');
 video.setAttribute('playsinline', '');
 
-var facingMode = "user";
+var facingMode = "environment";
 
 var constraints = {
   audio: false,
@@ -39,26 +39,10 @@ navigator.mediaDevices.getUserMedia(constraints).then(function success(stream) {
 	video.srcObject = stream;
 });
 
+video.webkitEnterFullScreen();
+
 document.body.appendChild(video);
 
-video.addEventListener('click', function() {
-  if (facingMode == "user") {
-    facingMode = "environment";
-  } else {
-    facingMode = "user";
-  }
-
-  constraints = {
-    audio: false,
-    video: {
-      facingMode: facingMode
-    }
-  }
-
-  navigator.mediaDevices.getUserMedia(constraints).then(function success(stream) {
-	  video.srcObject = stream;
-  });
-});
 
 
 </script>
