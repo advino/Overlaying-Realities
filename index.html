@@ -92,7 +92,7 @@ fullScreen.addEventListener('click', function(){
   	video.srcObject = stream;
   });
 
-  contain.insertBefore(video, fullScreen);
+  document.body.appendChild(video);
 
   video.webkitEnterFullScreen();
 
