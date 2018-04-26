@@ -121,6 +121,10 @@
 <!-- Code for inserting media/AR -->
   <script>
 
+
+
+    navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia;
+
     // Code for camera media
     // var video = document.createElement('video');
     // video.style.width = document.width + 'px';
@@ -168,9 +172,8 @@
 
     // AR based Code
 
-    window.addEventListener('load', function() {
-      navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia;
-      
+    fullScreen.addEventListener('click', function() {
+      fullScreen.innerHTML = 'Loading...';
       // contain.style.display = 'none';
 
 
@@ -306,7 +309,7 @@
 
   			        // add some points of interest (poi) for each of the compass points
   			        awe.pois.add({ id:'north', position: { x:125, y:10, z:-200 } });
-
+                awe.pois.add({id: 'text', position: { x:125, y:10, z:-195}});
 
   			        // add projections to each of the pois
   			        awe.projections.add({
@@ -319,6 +322,23 @@
                     fog: true,
   			          },
   			        }, { poi_id: 'north' });
+
+                awe.projections.add({
+                  'geometry':
+                  {
+                    'font-url': "MaisonNeueMono.js",
+                    'parameters': {
+                      'height': 10,
+                      'size': 80,
+                    },
+                  'shape': "text",
+                  'text': "Body Temp: 97",
+                },
+                'material': {
+                  'type': 'phong',
+                  'color': 0X000000,
+                },
+              }, {poi_id: 'text'});
 
 
 
