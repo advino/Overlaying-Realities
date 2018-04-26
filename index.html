@@ -122,7 +122,6 @@
   <script>
 
     // Code for camera media
-    navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia;
     // var video = document.createElement('video');
     // video.style.width = document.width + 'px';
     // video.style.height = document.height + 'px';
@@ -170,7 +169,8 @@
     // AR based Code
 
     window.addEventListener('load', function() {
-
+      navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia;
+      
       // contain.style.display = 'none';
 
 
