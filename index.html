@@ -89,7 +89,7 @@ navigator.mediaDevices.getUserMedia(constraints).then(function success(stream) {
 var fullScreen = document.getElementById('fullScreen');
 var contain = document.getElementById('container');
 
-contain.appendChild(video);
+contain.insertBefore(video, fullScreen);
 
 fullScreen.addEventListener('click', function(){
 
