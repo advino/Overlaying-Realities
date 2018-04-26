@@ -9,8 +9,12 @@
 
   <script src="webapp.js" type="text/javascript"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="ARjs/awe-v8.js" type="text/javascript"></script>
+  <script src="ARjs/awe-loader.js" type="text/javascript"></script>
+  <!-- <script src="ARjs/awe-standard.js" type="text/javascript"></script> -->
+  <!-- <script src="ARjs/awe-standard-dependancies.js" type="text/javascript"></script> -->
 
-  <style>
+  <style type="text/css">
 
     @font-face {
       font-family: Maison Neue;
@@ -110,7 +114,13 @@
   </div>
 
 
+
+<!-- Code for inserting media/AR -->
   <script>
+
+    // Code for camera media
+
+
     navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia;
     var video = document.createElement('video');
     video.style.width = document.width + 'px';
@@ -154,7 +164,60 @@
 
       });
     });
+
+    // AR based Code
+
+    window.addEventListener('load', function() {
+      window.awe.init({
+        device_type: awe.AUTO_DETECT_DEVICE_TYPE,
+
+        settings: {
+          container_id: 'container',
+          fps: 30,
+          default_camera_position: {x:0,y:0,z:0},
+          default_lights:[
+            {
+              id: 'hemisphere_light',
+              type: 'hemisphere',
+              color: 0xCCCCCC
+            },
+          ],
+        },
+        ready: function() {
+          var d = '?_='+Date.now();
+
+          awe.util.require([
+            {
+              capabilities: ['webgl', 'gum'],
+              files: [
+                ["ARjs/awe-standard-dependancies.js"+d, "Arjs/awe-standard.js"+d],
+                ["ARjs/plugins/StereoEffect.js"+d, "ARjs/plugins/VREffect.js"+d],
+                'ARjs/plugins/awe.rendering_effects.js'+d,
+                'ARjs/plugins/awe.awe-standard-object_clicked_or_focused.js'+d,
+                'awe.gryo.js'+d,
+                'awe.mouse.js'+d,
+              ],
+              success: function() {
+                awe.setup_scene();
+
+
+              }
+            }
+          ])
+
+        }
+      });
+
+      // Let console know if awe has initialized
+      console.log('awe has been initialized');
+    });
+
+
+
+
   </script>
+
+
 </body>
 
 
