@@ -4,133 +4,152 @@
 <meta charset="utf-8">
 
 <head>
-<title>WebApp Demo</title>
+  <title>WebApp Demo</title>
 
-<script src="webapp.js" type="text/javascript"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="webapp.js" type="text/javascript"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
-<style>
+  <style>
 
-body{
-  display: flex;
-  justify-content: center;
-  margin-top: 50px;
-}
+    @font-face {
+      font-family: Maison Neue;
+      src: url(maisonneue-medium.ttf);
+      font-weight: bold;
+    }
 
-#container {
-  display: block;
-  padding: 10px;
-  border-style: solid;
-  border-width: medium;
-  border-color: black;
-  box-shadow: 5px 7px;
-  width: 50%;
-  height: auto;
+    @font-face {
+      font-family: Maison Neue;
+      src: url(maisonneue-mono.ttf);
+      font-weight: 100;
+    }
 
-}
+    body {
+      display: flex;
+      justify-content: center;
+      margin-top: 50px;
+    }
 
-video {
-  display: none;
-  margin: auto;
-  width: 75%;
+    #container {
+      display: block;
+      padding: 20px;
+      border-style: solid;
+      border-width: medium;
+      border-color: black;
+      box-shadow: 5px 7px;
+      width: 50%;
+      height: auto;
+
+    }
+
+    video {
+      display: none;
+      margin: auto;
+      margin-top: 15px;
+      margin-bottom: 15px;
+      width: 75%;
 
 
-}
+    }
 
-#fullScreen {
-  display: block;
-  margin: auto;
-  padding: 10px;
-  width: 75%;
-  background: red;
-  color: white;
-  border: none;
-  text-decoration: none;
+    h3 {
+      font-family: maisonneue-medium;
 
-}
+    }
 
-</style>
+    #blurb {
+      display: block;
+      font-family: maisonneue-mono;
+      font-size: 14px;
+      margin-bottom: 25px;
+    }
+
+    #fullScreen {
+      display: block;
+      margin: auto;
+      padding: 10px;
+      width: 75%;
+      background: red;
+      color: white;
+      border: none;
+      text-decoration: none;
+      font-family: maisonneue-mono;
+      font-size: 16px;
+
+    }
+  </style>
 
 </head>
 
 <body translate="no">
 
 
-<div id="container" style="margin: auto">
-  <button id="fullScreen">Start App</button>
-</div>
+  <div id="container" style="margin: auto">
+    <h3>Overlaying Realities</h3>
+    <p id="blurb">
+      This is the work-in-progress web app for Overlaying Realities.
+      If you are using an iPhone, make sure you have iOS 11 installed.
+      If you are on Android, this app should work fine on a variety of
+      OS verions.
+
+    </br>
+    </br>
+       I have created an immersive experience to help the residents
+       of Providence understand how climate change will affect their
+       lives on an individual level. Using both AR and Physical computing
+       I will be mapping the effects of Urban Heating from future climates
+       onto your daily routines and behaviors. Through this mapping, I hope
+       to show you just how different your life will be under the hot sun
+       of a future Providence.
+    </p>
+    <button id="fullScreen">Start App</button>
+  </div>
 
 
-<script>
+  <script>
+    navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia;
+    var video = document.createElement('video');
+    video.style.width = document.width + 'px';
+    video.style.height = document.height + 'px';
+    video.setAttribute('autoplay', '');
+    video.setAttribute('muted', '');
+    video.setAttribute('playsinline', '');
 
-navigator.getUserMedia  = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia;
-var video = document.createElement('video');
-video.style.width =  document.width + 'px';
-video.style.height = document.height + 'px';
-video.setAttribute('autoplay', '');
-video.setAttribute('muted', '');
-video.setAttribute('playsinline', '');
+    var facingMode = "environment";
 
-var facingMode = "environment";
-
-var constraints = {
-  audio: false,
-  video: {
-    facingMode: facingMode
-  }
-}
-
-navigator.mediaDevices.getUserMedia(constraints).then(function success(stream) {
-  video.srcObject = stream;
-});
-
-
-
-var fullScreen = document.getElementById('fullScreen');
-var contain = document.getElementById('container');
-
-contain.insertBefore(video, fullScreen);
-
-fullScreen.addEventListener('click', function(){
-
-  // var video = document.createElement('video');
-  // video.style.width =  document.width + 'px';
-  // video.style.height = document.height + 'px';
-  // video.setAttribute('autoplay', '');
-  // video.setAttribute('muted', '');
-  // video.setAttribute('playsinline', '');
-  //
-  // var facingMode = "environment";
-  //
-  // var constraints = {
-  //   audio: false,
-  //   video: {
-  //     facingMode: facingMode
-  //   }
-  // }
-  //
-  // navigator.mediaDevices.getUserMedia(constraints).then(function success(stream) {
-  // 	video.srcObject = stream;
-  // });
-  //
-  // document.body.appendChild(video);
-  video.style.display = 'block';
-  video.webkitEnterFullScreen();
-
-
-  document.addEventListener("webkitfullscreenchange", function() {
-
-    console.log(document.webkitIsFullScreen);
-    if(document.webkitIsFullScreen == false) {
-      video.style.display = 'none';
+    var constraints = {
+      audio: false,
+      video: {
+        facingMode: facingMode
+      }
     }
 
-  });
-});
+    navigator.mediaDevices.getUserMedia(constraints).then(function success(stream) {
+      video.srcObject = stream;
+    });
 
 
 
-</script>
+    var fullScreen = document.getElementById('fullScreen');
+    var contain = document.getElementById('container');
+
+    contain.insertBefore(video, fullScreen);
+
+    fullScreen.addEventListener('click', function() {
+
+      video.style.display = 'block';
+      video.webkitEnterFullScreen();
+
+
+      document.addEventListener("webkitfullscreenchange", function() {
+
+        console.log(document.webkitIsFullScreen);
+        if (document.webkitIsFullScreen == false) {
+          video.style.display = 'none';
+        }
+
+      });
+    });
+  </script>
 </body>
 
 
