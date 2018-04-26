@@ -210,12 +210,13 @@
       						render_effects_plugin.enable();
     						}
 
-                awe.pois.add({ id:'north', position: { x:0, y:0, z:200 } });
+                awe.pois.add({ id:'north', position: { x:100, y:0, z:200 } });
 
                 awe.projetions.add({
                   id: 'n',
                   geometry: {shape: 'cube', x:50, y:50, z:50},
                   material: {
+                    type: 'phong',
                     color: 0XFF0000,
 
                   },
