@@ -30,7 +30,7 @@ body{
 }
 
 video {
-  display: block;
+  display: none;
   margin: auto;
   width: 75%;
 
@@ -115,7 +115,7 @@ fullScreen.addEventListener('click', function(){
   // });
   //
   // document.body.appendChild(video);
-
+  video.style.display = 'block';
   video.webkitEnterFullScreen();
 
 
@@ -123,7 +123,7 @@ fullScreen.addEventListener('click', function(){
 
     console.log(document.webkitIsFullScreen);
     if(document.webkitIsFullScreen == false) {
-      video.remove();
+      video.style.display = 'none';
     }
 
   });
