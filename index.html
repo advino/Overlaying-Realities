@@ -84,7 +84,7 @@ navigator.mediaDevices.getUserMedia(constraints).then(function success(stream) {
   video.srcObject = stream;
 });
 
-contain.appendChild(video);
+document.body.appendChild(video);
 
 
 var fullScreen = document.getElementById('fullScreen');
