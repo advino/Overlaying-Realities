@@ -122,7 +122,7 @@
   <script>
 
     // Code for camera media
-    // navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia;
+    navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia;
     // var video = document.createElement('video');
     // video.style.width = document.width + 'px';
     // video.style.height = document.height + 'px';
@@ -305,7 +305,7 @@
 
 
   			        // add some points of interest (poi) for each of the compass points
-  			        awe.pois.add({ id:'north', position: { x:0, y:0, z:-200 } });
+  			        awe.pois.add({ id:'north', position: { x:75, y:90, z:-200 } });
 
 
   			        // add projections to each of the pois
