@@ -305,14 +305,14 @@
 
 
   			        // add some points of interest (poi) for each of the compass points
-  			        awe.pois.add({ id:'north', position: { x:75, y:90, z:-200 } });
+  			        awe.pois.add({ id:'north', position: { x:100, y:90, z:-200 } });
 
 
   			        // add projections to each of the pois
   			        awe.projections.add({
   			          id:'n',
-  			          geometry:{ shape:'plane', width: 200, height: 50},
-                  rotation:{ x:0, y:0, z:0 },
+  			          geometry:{ shape:'cube', x: 100, y: 50, z: 5},
+                  rotation:{ x:0, y:-10, z:0 },
   			          material:{
   			            type: 'phong',
   			            color:0xFFFFFF,
