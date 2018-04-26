@@ -93,7 +93,8 @@ fullScreen.addEventListener('click', function(){
   });
 
   contain.insertBefore(video, fullScreen);
-  video.webkitRequestFullScreen();
+
+  video.webkitEnterFullScreen();
 
 
   document.addEventListener("webkitfullscreenchange", function() {
