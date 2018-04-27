@@ -126,25 +126,25 @@
     navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia;
 
     // Code for camera media
-    // var video = document.createElement('video');
-    // video.style.width = document.width + 'px';
-    // video.style.height = document.height + 'px';
-    // video.setAttribute('autoplay', '');
-    // video.setAttribute('muted', '');
-    // video.setAttribute('playsinline', '');
-    //
-    // var facingMode = "environment";
-    //
-    // var constraints = {
-    //   audio: false,
-    //   video: {
-    //     facingMode: facingMode
-    //   }
-    // }
-    //
-    // navigator.mediaDevices.getUserMedia(constraints).then(function success(stream) {
-    //   video.srcObject = stream;
-    // });
+    var video = document.createElement('video');
+    video.style.width = document.width + 'px';
+    video.style.height = document.height + 'px';
+    video.setAttribute('autoplay', '');
+    video.setAttribute('muted', '');
+    video.setAttribute('playsinline', '');
+
+    var facingMode = "environment";
+
+    var constraints = {
+      audio: false,
+      video: {
+        facingMode: facingMode
+      }
+    }
+
+    navigator.mediaDevices.getUserMedia(constraints).then(function success(stream) {
+      video.srcObject = stream;
+    });
 
     var init = false;
 
@@ -174,80 +174,6 @@
 
     fullScreen.addEventListener('click', function() {
       fullScreen.innerHTML = 'Loading...';
-      // contain.style.display = 'none';
-
-
-      // window.awe.init({
-      //   device_type: awe.AUTO_DETECT_DEVICE_TYPE,
-      //
-      //   settings: {
-      //     container_id: 'container',
-      //     fps: 30,
-      //     default_camera_position: {x:0,y:0,z:0},
-      //     default_lights:[
-      //       {
-      //         id: 'hemisphere_light',
-      //         type: 'hemisphere',
-      //         color: 0xCCCCCC
-      //       },
-      //     ],
-      //   },
-      //   ready: function() {
-      //     var d = '?_='+Date.now();
-      //
-      //     awe.util.require([
-      //       {
-      //         capabilities: ['webgl', 'gum'],
-      //         files: [
-      //           ["ARjs/awe-standard-dependencies.js"+d, "Arjs/awe-standard.js"+d],
-      //           ["ARjs/plugins/StereoEffect.js"+d, "ARjs/plugins/VREffect.js"+d],
-      //           'ARjs/plugins/awe.rendering_effects.js'+d,
-      //           'ARjs/plugins/awe-standard-object_clicked_or_focused.js'+d,
-      //           'ARjs/awe.gyro.js'+d,
-      //         ],
-      //         success: function() {
-      //           awe.setup_scene();
-      //
-      //           var gyro_plugin = awe.plugins.view('gyro');
-    	// 					if (gyro_plugin) {
-      // 						gyro_plugin.enable();
-    	// 					}
-    	// 					var mouse_plugin = awe.plugins.view('gyro');
-    	// 					if (gyro_plugin) {
-      // 						gyro_plugin.enable();
-    	// 					}
-      //
-      //           awe.settings.update({data:{value: 'ar'}, where:{id: 'view_mode'}})
-    	// 					var render_effects_plugin = awe.plugins.view('render_effects');
-    	// 					if (render_effects_plugin) {
-      // 						render_effects_plugin.enable();
-    	// 					}
-      //
-      //           awe.pois.add({ id:'south', position: { x:0, y:0, z: -200 } });
-      //
-      //           awe.projetions.add({
-      //             id: 'n',
-      //             geometry: {shape: 'plane', width: 200, height: 200},
-      //             rotation: {x:0, y:0, z:0},
-      //             material: {
-      //               type: 'phong',
-      //               color: 0XFF0000,
-      //
-      //             },
-      //           }, { poi_id: 'south' });
-      //
-      //
-      //         },
-      //         }
-      //
-      //     ]);
-      //
-      //   }
-      //
-      //
-      // });
-
-      // Let console know if awe has initialized
 
       window.awe.init({
         // automatically detect the device type
@@ -353,6 +279,9 @@
               },
             },
           ]);
+
+          
+
         }
       });
 
