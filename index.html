@@ -41,6 +41,7 @@
       border-color: black;
       box-shadow: 5px 7px;
       width: 75%;
+      max-width: 565px;
       height: auto;
 
     }
@@ -55,7 +56,7 @@
 
     }
 
-    h3 {
+    h2 {
       font-family: Maison Neue;
       font-weight: bold;
     }
@@ -65,12 +66,14 @@
       font-family: Maison Neue;
       font-size: 14px;
       font-weight: 100;
-      margin-bottom: 25px;
+      line-height: 1.5;
+
     }
 
     #fullScreen {
       display: block;
       margin: auto;
+      margin-top: 40px;
       padding: 10px;
       width: 75%;
       background: red;
@@ -90,12 +93,12 @@
 
 
   <div id="container" style="margin: auto">
-    <h3>Overlaying Realities</h3>
+    <h2>Overlaying Realities</h2>
     <p id="blurb">
       This is the work-in-progress web app for Overlaying Realities.
       </br>
       </br>
-      If you are using an iPhone, make sure you have iOS 11 installed.
+      If you are using an iPhone, you are shit out of luck for now, unfortunately.
       If you are on Android, this app should work fine on a variety of
       OS verions.
 
@@ -125,50 +128,23 @@
 
     navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia;
 
+
+
     // Code for camera media
-    var video = document.createElement('video');
-    video.style.width = document.width + 'px';
-    video.style.height = document.height + 'px';
-    video.setAttribute('autoplay', '');
-    video.setAttribute('muted', '');
-    video.setAttribute('playsinline', '');
-
-    var facingMode = "environment";
-
-    var constraints = {
-      audio: false,
-      video: {
-        facingMode: facingMode
-      }
-    }
-
-    navigator.mediaDevices.getUserMedia(constraints).then(function success(stream) {
-      video.srcObject = stream;
-    });
-
-    var init = false;
 
     var fullScreen = document.getElementById('fullScreen');
     var contain = document.getElementById('container');
+    //
+    // if(document.getElementById('awe_canvas-0')) {
+    //
+    //
+    //
+    // } else {
+    //   console.log('canvas has not loaded yet');
+    //
+    // }
 
 
-    // contain.insertBefore(video, fullScreen);
-
-    fullScreen.addEventListener('click', function() {
-
-      // video.style.display = 'block';
-      // video.webkitEnterFullScreen();
-
-
-      document.addEventListener("webkitfullscreenchange", function() {
-
-        console.log(document.webkitIsFullScreen);
-        if (document.webkitIsFullScreen == false) {
-          // video.style.display = 'none';
-        }
-
-      });
-    });
 
     // AR based Code
 
@@ -180,7 +156,7 @@
         device_type: awe.AUTO_DETECT_DEVICE_TYPE,
         // populate some default settings
         settings: {
-        	container_id: 'container',
+        	container_id: 'body',
           fps: 30,
           default_camera_position: { x:0, y:0, z:0 },
           default_lights:[
@@ -229,6 +205,12 @@
     						if (render_effects_plugin) {
       						render_effects_plugin.enable();
     						}
+
+                var canvasElement = document.getElementById('awe_canvas-0');
+
+                canvasElement.addEventListener('click', function() {
+                  canvasElement.webkitRequestFullScreen();
+                });
 
                 // setup some code to handle when an object is clicked/tapped
 
@@ -280,13 +262,16 @@
             },
           ]);
 
-          
+
 
         }
       });
 
-    });
 
+
+
+
+    });
 
 
 
