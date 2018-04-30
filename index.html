@@ -130,20 +130,10 @@
 
 
 
-    // Code for camera media
+    // DOM elements
 
     var fullScreen = document.getElementById('fullScreen');
     var contain = document.getElementById('container');
-    //
-    // if(document.getElementById('awe_canvas-0')) {
-    //
-    //
-    //
-    // } else {
-    //   console.log('canvas has not loaded yet');
-    //
-    // }
-
 
 
     // AR based Code
@@ -205,6 +195,9 @@
     						if (render_effects_plugin) {
       						render_effects_plugin.enable();
     						}
+                // 
+                // Some code to make the canvas fullscreen when clicked.
+                // This is primarily working on Andriod.
 
                 var canvasElement = document.getElementById('awe_canvas-0');
 
@@ -266,11 +259,6 @@
 
         }
       });
-
-
-
-
-
     });
 
 
