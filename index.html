@@ -169,33 +169,33 @@
                 ['ARjs/plugins/StereoEffect.js'+d, 'ARjs/plugins/VREffect.js'+d], // dependencies for render effects
                 'ARjs/plugins/awe.rendering_effects.js'+d,
                 'ARjs/plugins/awe-standard-object_clicked_or_focused.js'+d, // object click/tap handling plugin
-                // 'awe.gyro.js'+d, // basic gyro handling
-                // 'awe.mouse.js'+d, // basic mouse handling
+                'Arjs/awe.gyro.js'+d, // basic gyro handling
+                'ARjs/awe.mouse.js'+d, // basic mouse handling
               ],
               success: function() {
                 // setup and paint the scene
   			        awe.setup_scene();
 
-    						// var click_plugin = awe.plugins.view('object_clicked');
-    						// if (click_plugin) {
-      					// 	click_plugin.register();
-      					// 	click_plugin.enable();
-    						// }
-    						// var gyro_plugin = awe.plugins.view('gyro');
-    						// if (gyro_plugin) {
-      					// 	gyro_plugin.enable();
-    						// }
-    						// var mouse_plugin = awe.plugins.view('gyro');
-    						// if (gyro_plugin) {
-      					// 	gyro_plugin.enable();
-    						// }
+    						var click_plugin = awe.plugins.view('object_clicked');
+    						if (click_plugin) {
+      						click_plugin.register();
+      						click_plugin.enable();
+    						}
+    						var gyro_plugin = awe.plugins.view('gyro');
+    						if (gyro_plugin) {
+      						gyro_plugin.enable();
+    						}
+    						var mouse_plugin = awe.plugins.view('gyro');
+    						if (gyro_plugin) {
+      						gyro_plugin.enable();
+    						}
 
                 awe.settings.update({data:{value: 'ar'}, where:{id: 'view_mode'}})
     						var render_effects_plugin = awe.plugins.view('render_effects');
     						if (render_effects_plugin) {
       						render_effects_plugin.enable();
     						}
-                // 
+                //
                 // Some code to make the canvas fullscreen when clicked.
                 // This is primarily working on Andriod.
 
@@ -210,7 +210,6 @@
 
   			        // add some points of interest (poi) for each of the compass points
   			        awe.pois.add({ id:'north', position: { x:125, y:10, z:-200 } });
-                awe.pois.add({id: 'text', position: { x:125, y:10, z:-195}});
 
   			        // add projections to each of the pois
   			        awe.projections.add({
@@ -223,26 +222,6 @@
                     fog: true,
   			          },
   			        }, { poi_id: 'north' });
-
-                awe.projections.add({
-                  'geometry':
-                  {
-                    'font-url': "MaisonNeueMono.js",
-                    'parameters': {
-                      'height': 10,
-                      'size': 80,
-                    },
-                  'shape': "text",
-                  'text': "Body Temp: 97",
-                },
-                'material': {
-                  'type': 'phong',
-                  'color': 0X000000,
-                },
-              }, {poi_id: 'text'});
-
-
-
               },
             },
             { // else create a fallback
