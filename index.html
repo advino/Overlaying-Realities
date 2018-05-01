@@ -112,11 +112,12 @@ navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia 
 var video = document.createElement('video');
 video.style.width = '100%';
 video.style.height = '100%';
+video.style.margin = 'auto';
 video.setAttribute('autoplay', '');
 video.setAttribute('muted', '');
 video.setAttribute('playsinline', '');
 
-var facingMode = 'user';
+var facingMode = 'environment';
 
 var constraints = {
   audio: false,
@@ -152,10 +153,9 @@ fullScreen.addEventListener('click', function() {
   videoContainer.appendChild(video);
   videoContainer.appendChild(notiBar);
 
-  
+
 
     videoContainer.webkitRequestFullScreen();
-
 
 });
 
