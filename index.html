@@ -122,10 +122,11 @@ var facingMode = "environment";
 var constraints = {
   audio: false,
   video: {
-    facingMode: facingMode,
-    width: 1920,
-    height: 1080
-    }
+    optional: [{
+      facingMode: 'environment',
+    }],
+
+  }
 }
 
 navigator.mediaDevices.getUserMedia(constraints).then(function success(stream) {
