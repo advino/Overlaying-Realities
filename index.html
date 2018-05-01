@@ -122,7 +122,7 @@ var facingMode = "environment";
 var constraints = {
   audio: false,
   video: {
-    facingmode: facingMode,
+    facingMode: facingMode,
     width: 1920,
     height: 1080
     }
@@ -133,32 +133,42 @@ navigator.mediaDevices.getUserMedia(constraints).then(function success(stream) {
 });
 
 fullScreen.addEventListener('click', function() {
-  // fullScreen.innerHTML = "Loading...";
-  // var videoContainer = document.createElement('div');
-  //
-  // videoContainer.style.width = '100%';
-  // videoContainer.style.height = '100%';
-  // videoContainer.style.background = 'black';
-  // // videoContainer.style.position = 'relative';
-  //
-  // var notiBar = document.createElement('div');
-  //
-  // notiBar.style.background = 'white';
-  // notiBar.style.width = '400px';
-  // notiBar.style.height = '100px';
-  // notiBar.style.position = 'absolute';
-  // notiBar.style.right = '10px';
-  // notiBar.style.top = '10px';
-  //
-  //
-  //
-  // document.body.appendChild(videoContainer);
-  // videoContainer.appendChild(video);
-  // videoContainer.appendChild(notiBar);
+  fullScreen.innerHTML = "Loading...";
+  var videoContainer = document.createElement('div');
+
+  videoContainer.style.width = '100%';
+  videoContainer.style.height = '100%';
+  videoContainer.style.background = 'black';
+  // videoContainer.style.position = 'relative';
+
+  var notiBar = document.createElement('div');
+
+  notiBar.style.background = 'white';
+  notiBar.style.width = '400px';
+  notiBar.style.height = '100px';
+  notiBar.style.position = 'absolute';
+  notiBar.style.right = '10px';
+  notiBar.style.top = '10px';
 
 
-  document.body.appendChild(video);
-  video.webkitEnterFullScreen();
+
+  document.body.appendChild(videoContainer);
+  videoContainer.appendChild(video);
+  videoContainer.appendChild(notiBar);
+
+
+
+  videoContainer.webkitRequestFullScreen();
+
+  // videoContainer.addEventListener('fullsceenchange', function() {
+  //   if(webkitIsFullScreen()) {
+  //     console.log('true');
+  //   } else {
+  //     videoContainer.style.display = 'none';
+  //   }
+  //
+  // });
+
 
 });
 
