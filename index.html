@@ -111,9 +111,8 @@ var contain = document.getElementById('container');
 navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia;
 
 var video = document.createElement('video');
-video.style.width = '100%';
-video.style.height = '100%';
-video.style.position = 'relative';
+video.style.width = document.width + 'px';
+video.style.height = document.height + 'px';
 video.setAttribute('autoplay', '');
 video.setAttribute('muted', '');
 video.setAttribute('playsinline', '');
@@ -134,32 +133,32 @@ navigator.mediaDevices.getUserMedia(constraints).then(function success(stream) {
 });
 
 fullScreen.addEventListener('click', function() {
-  fullScreen.innerHTML = "Loading...";
-  var videoContainer = document.createElement('div');
+  // fullScreen.innerHTML = "Loading...";
+  // var videoContainer = document.createElement('div');
+  //
+  // videoContainer.style.width = '100%';
+  // videoContainer.style.height = '100%';
+  // videoContainer.style.background = 'black';
+  // // videoContainer.style.position = 'relative';
+  //
+  // var notiBar = document.createElement('div');
+  //
+  // notiBar.style.background = 'white';
+  // notiBar.style.width = '400px';
+  // notiBar.style.height = '100px';
+  // notiBar.style.position = 'absolute';
+  // notiBar.style.right = '10px';
+  // notiBar.style.top = '10px';
+  //
+  //
+  //
+  // document.body.appendChild(videoContainer);
+  // videoContainer.appendChild(video);
+  // videoContainer.appendChild(notiBar);
 
-  videoContainer.style.width = '100%';
-  videoContainer.style.height = '100%';
-  videoContainer.style.background = 'black';
-  // videoContainer.style.position = 'relative';
 
-  var notiBar = document.createElement('div');
-
-  notiBar.style.background = 'white';
-  notiBar.style.width = '400px';
-  notiBar.style.height = '100px';
-  notiBar.style.position = 'absolute';
-  notiBar.style.right = '10px';
-  notiBar.style.top = '10px';
-
-
-
-  document.body.appendChild(videoContainer);
-  videoContainer.appendChild(video);
-  videoContainer.appendChild(notiBar);
-
-
-
-    video.webkitEnterFullScreen();
+  document.body.appendChild(video);
+  video.webkitEnterFullScreen();
 
 });
 
