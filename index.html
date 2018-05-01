@@ -206,25 +206,13 @@
                 });
 
                 // setup some code to handle when an object is clicked/tapped
-                awe.projections.update(
-                  {
-                  data: {
-                    position: {
-                      x: lat ,
-                      y: lon + 20,
 
-                    },
-                    where: {
-                      id: 'boxGuy',
-                    }
 
-                  },
 
-                });
 
   			        // add some points of interest (poi) for each of the compass points
 
-                awe.pois.add({id: 'boxGuy', position: {x: 0, y: 30, z: 0}});
+                awe.pois.add({id: 'boxGuy', position: {x: 0, y: 20, z: 50}});
   			        // add projections to each of the pois
 
                 awe.projections.add({
