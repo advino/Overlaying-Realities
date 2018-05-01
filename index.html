@@ -176,19 +176,19 @@
                 // setup and paint the scene
   			        awe.setup_scene();
 
-    						var click_plugin = awe.plugins.view('object_clicked');
-    						if (click_plugin) {
-      						click_plugin.register();
-      						click_plugin.enable();
-    						}
+    						// var click_plugin = awe.plugins.view('object_clicked');
+    						// if (click_plugin) {
+      					// 	click_plugin.register();
+      					// 	click_plugin.enable();
+    						// }
     						var gyro_plugin = awe.plugins.view('gyro');
     						if (gyro_plugin) {
       						gyro_plugin.enable();
     						}
-    						var mouse_plugin = awe.plugins.view('gyro');
-    						if (gyro_plugin) {
-      						gyro_plugin.enable();
-    						}
+    						// var mouse_plugin = awe.plugins.view('gyro');
+    						// if (gyro_plugin) {
+      					// 	gyro_plugin.enable();
+    						// }
 
                 awe.settings.update({data:{value: 'ar'}, where:{id: 'view_mode'}})
     						var render_effects_plugin = awe.plugins.view('render_effects');
@@ -209,19 +209,21 @@
 
 
   			        // add some points of interest (poi) for each of the compass points
-  			        awe.pois.add({ id:'north', position: { x:125, y:10, z:-200 } });
-
+  			       
+                awe.pois.add({id: 'boxGuy', position: {x: 0, y: 30, z: 0}});
   			        // add projections to each of the pois
-  			        awe.projections.add({
-  			          id:'n',
-  			          geometry:{ shape:'plane', width: 100, height: 50},
-                  rotation:{ x:0, y:-10, z:0 },
-  			          material:{
-  			            type: 'phong',
-  			            color:0xFFFFFF,
+
+                awe.projections.add({
+                  id: 'z',
+                  geometry: { shape: 'cube', x: 10, y: 10, z: 10},
+                  rotation: {x: 0, y:0, z:0},
+                  material: {
+                    type: 'phong',
+                    color: 0XFFFFFFF,
                     fog: true,
-  			          },
-  			        }, { poi_id: 'north' });
+                  },
+                }, {poi_id: 'boxGuy'});
+
               },
             },
             { // else create a fallback
