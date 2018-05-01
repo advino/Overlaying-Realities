@@ -38,6 +38,7 @@
       border-color: black;
       box-shadow: 5px 7px;
       width: 75%;
+      max-width: 556px;
       height: auto;
 
     }
@@ -112,7 +113,7 @@ navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia 
 var video = document.createElement('video');
 video.style.width = '100%';
 video.style.height = '100%';
-video.style.margin = 'auto';
+video.style.position = 'relative';
 video.setAttribute('autoplay', '');
 video.setAttribute('muted', '');
 video.setAttribute('playsinline', '');
@@ -122,7 +123,9 @@ var facingMode = 'environment';
 var constraints = {
   audio: false,
   video: {
-    facingmode: facingMode
+    facingmode: facingMode,
+    width: 1920,
+    height: 1080
     }
 }
 
@@ -136,11 +139,12 @@ fullScreen.addEventListener('click', function() {
 
   videoContainer.style.width = '100%';
   videoContainer.style.height = '100%';
-  videoContainer.style.position = 'relative';
+  videoContainer.style.background = 'black';
+  // videoContainer.style.position = 'relative';
 
   var notiBar = document.createElement('div');
 
-  notiBar.style.background = 'red';
+  notiBar.style.background = 'white';
   notiBar.style.width = '400px';
   notiBar.style.height = '100px';
   notiBar.style.position = 'absolute';
