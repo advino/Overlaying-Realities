@@ -124,13 +124,6 @@
 
             if (device.kind == 'videoinput') {
               availCam.push(device);
-
-              if(availCam.length > 1) {
-                for(var i = 0; i < availCam.length; i++) {
-                  alert(availCam[i].label);
-
-                }
-              }
             }
 
             if (device.kind == 'videoinput') {
@@ -146,7 +139,7 @@
                 alert("Device Selected: " + availCam[1].label);
               } else {
                 deviceId = availCam[0].deviceId;
-                console.log("Device Selected: " + availCam[0].label);
+                alert("Device Selected: " + availCam[0].label);
               }
 
 
@@ -184,7 +177,7 @@
       var constraints = {
         audio: false,
         video: {
-          // facingMode: "environment",
+          // facingMode:{exact: "environment"},
           deviceId: { exact: deviceId },
           width: 1920,
           height: 1080
