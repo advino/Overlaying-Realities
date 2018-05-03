@@ -105,7 +105,7 @@
     var cameraCount = 0;
     var availCam = [];
     var cameraType;
-    var deviceKind, deviceLabel, deviceId;
+    var deviceKind, deviceLabel, idNum;
 
 
     fullScreen.addEventListener('click', function() {
@@ -135,10 +135,10 @@
 
 
               if (availCam.length >= 2) {
-                deviceId = availCam[1].deviceId;
+                idNum = availCam[1].deviceId;
                 alert("Device Selected: " + availCam[1].label);
               } else {
-                deviceId = availCam[0].deviceId;
+                idNum = availCam[0].deviceId;
                 alert("Device Selected: " + availCam[0].label);
               }
 
@@ -178,7 +178,7 @@
         audio: false,
         video: {
           // facingMode:{exact: "environment"},
-          deviceId: { exact: deviceId },
+          deviceId: { exact: idNum },
           width: 1920,
           height: 1080
 
