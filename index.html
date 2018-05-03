@@ -128,11 +128,6 @@
 
             if (device.kind == 'videoinput') {
 
-              cameraType = [device.kind, device.label, device.deviceId];
-
-              deviceKind = cameraType[0];
-              deviceLabel = cameraType[1];
-
 
               if (availCam.length >= 2) {
                 idNum = availCam[1].deviceId;
@@ -162,6 +157,8 @@
           console.log(err.name + ": " + err.message);
         });
 
+
+
       var video = document.createElement('video');
       video.style.width = document.width + 'px';
       video.style.height = document.height + 'px';
@@ -174,8 +171,8 @@
       var constraints = {
         audio: false,
         video: {
-          facingMode: 'back',
-          // deviceId: { exact: 'idNum' },
+          // facingMode: 'back',
+          deviceId: 'idNum',
           width: 1920,
           height: 1080
 
@@ -183,16 +180,20 @@
       }
 
 
+
       navigator.mediaDevices.getUserMedia(constraints).then(function success(stream) {
+        var videoTracks = stream.getVideoTracks()[1];
+        alert(videoTracks.label);
+        videoTracks.applyConstraints(constraints);
         video.srcObject = stream;
       });
 
 
-      var videoContainer = document.createElement('div');
-      contain.appendChild(videoContainer);
-      videoContainer.appendChild(video);
-
-      videoContainer.webkitRequestFullScreen();
+      // var videoContainer = document.createElement('div');
+      // contain.appendChild(videoContainer);
+      // videoContainer.appendChild(video);
+      //
+      // videoContainer.webkitRequestFullScreen();
 
 
     });
