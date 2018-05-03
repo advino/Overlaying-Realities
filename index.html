@@ -11,7 +11,6 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
   <style type="text/css">
-
     @font-face {
       font-family: Maison Neue;
       src: url(maisonneue-medium.ttf);
@@ -85,104 +84,128 @@
       This is the work-in-progress web app for Overlaying Realities.
       </br>
       </br>
-      If you are using an iPhone, you are shit out of luck for now, unfortunately.
-      If you are on Android, this app should work fine on a variety of
-      OS verions.
+      If you are using an iPhone, you are shit out of luck for now, unfortunately. If you are on Android, this app should work fine on a variety of OS verions.
 
-    </br>
-    </br>
-       I have created an immersive experience to help the residents
-       of Providence understand how climate change will affect their
-       lives on an individual level. Using both AR and Physical computing
-       I will be mapping the effects of Urban Heating from future climates
-       onto your daily routines and behaviors. Through this mapping, I hope
-       to show you just how different your life will be under the hot sun
-       of a future Providence.
+      </br>
+      </br>
+      I have created an immersive experience to help the residents of Providence understand how climate change will affect their lives on an individual level. Using both AR and Physical computing I will be mapping the effects of Urban Heating from future climates
+      onto your daily routines and behaviors. Through this mapping, I hope to show you just how different your life will be under the hot sun of a future Providence.
     </p>
     <button id="fullScreen">Start App</button>
   </div>
 
-<script>
+  <script>
+    // DOM elements
+    var fullScreen = document.getElementById('fullScreen');
+    var contain = document.getElementById('container');
 
-// DOM elements
-var fullScreen = document.getElementById('fullScreen');
-var contain = document.getElementById('container');
+    fullScreen.addEventListener('click', function() {
+      navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia;
 
-navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia;
+      if (!navigator.mediaDevices || !navigator.mediaDevices.enumerateDevices) {
+        console.log("enumerateDevices() not supported.");
+        return;
+      }
 
-var video = document.createElement('video');
-video.style.width = document.width + 'px';
-video.style.height = document.height + 'px';
-video.setAttribute('autoplay', '');
-video.setAttribute('muted', '');
-video.setAttribute('playsinline', '');
+      // List cameras and microphones.
 
-var facingMode = "environment";
+      navigator.mediaDevices.enumerateDevices()
+        .then(function(devices) {
+          devices.forEach(function(device) {
+            if (device.kind == 'videoinput') {
+              
+                var cameraType = document.createElement('p');
+                cameraType.innerHTML = device.label;
+                contain.appendChild(cameraType);
 
-var constraints = {
-  audio: false,
-  video: {
-    facingMode: facingMode,
-    width: 1920,
-    height: 1080
 
-  }
-}
+              // console.log(device.kind + ": " + device.label +
+              //   " id = " + device.deviceId);
 
-navigator.mediaDevices.getUserMedia(constraints).then(function success(stream) {
-  video.srcObject = stream;
-});
+            }
+          });
+        })
+        .catch(function(err) {
+          console.log(err.name + ": " + err.message);
+        });
 
-fullScreen.addEventListener('click', function() {
-  fullScreen.innerHTML = "Loading...";
-  var videoContainer = document.createElement('div');
 
-  videoContainer.style.width = '100%';
-  videoContainer.style.height = '100%';
-  videoContainer.style.background = 'black';
-  // videoContainer.style.position = 'relative';
-
-  var notiBar = document.createElement('div');
-
-  notiBar.style.background = 'white';
-  notiBar.style.width = '400px';
-  notiBar.style.height = '100px';
-  notiBar.style.position = 'absolute';
-  notiBar.style.right = '10px';
-  notiBar.style.top = '10px';
+    });
 
 
 
-  document.body.appendChild(videoContainer);
-  videoContainer.appendChild(video);
-  videoContainer.appendChild(notiBar);
-
-
-
-  videoContainer.webkitRequestFullScreen();
-
-  // videoContainer.addEventListener('fullsceenchange', function() {
-  //   if(webkitIsFullScreen()) {
-  //     console.log('true');
-  //   } else {
-  //     videoContainer.style.display = 'none';
-  //   }
-  //
-  // });
-
-
-});
-
-</script>
+    // var video = document.createElement('video');
+    // video.style.width = document.width + 'px';
+    // video.style.height = document.height + 'px';
+    // video.setAttribute('autoplay', '');
+    // video.setAttribute('muted', '');
+    // video.setAttribute('playsinline', '');
+    //
+    // var facingMode = "environment";
+    //
+    // var constraints = {
+    //   audio: false,
+    //   video: {
+    //     facingMod: "environment",
+    //     width: 1920,
+    //     height: 1080
+    //
+    //   }
+    // }
+    //
+    //
+    // navigator.mediaDevices.getUserMedia(constraints).then(function success(stream) {
+    //   video.srcObject = stream;
+    // });
+    //
+    // fullScreen.addEventListener('click', function() {
+    //   fullScreen.innerHTML = "Loading...";
+    //   var videoContainer = document.createElement('div');
+    //
+    //   videoContainer.style.width = '100%';
+    //   videoContainer.style.height = '100%';
+    //   videoContainer.style.background = 'black';
+    //   // videoContainer.style.position = 'relative';
+    //
+    //   var notiBar = document.createElement('div');
+    //
+    //   notiBar.style.background = 'white';
+    //   notiBar.style.width = '400px';
+    //   notiBar.style.height = '100px';
+    //   notiBar.style.position = 'absolute';
+    //   notiBar.style.right = '10px';
+    //   notiBar.style.top = '10px';
+    //
+    //
+    //
+    //   document.body.appendChild(videoContainer);
+    //   videoContainer.appendChild(video);
+    //   videoContainer.appendChild(notiBar);
+    //
+    //
+    //
+    //   videoContainer.webkitRequestFullScreen();
+    //
+    //   // videoContainer.addEventListener('fullsceenchange', function() {
+    //   //   if(webkitIsFullScreen()) {
+    //   //     console.log('true');
+    //   //   } else {
+    //   //     videoContainer.style.display = 'none';
+    //   //   }
+    //   //
+    //   // });
+    //
+    //
+    // });
+  </script>
 
   <!-- Loader files for awe.js -->
   <!-- <script src="ARjs/awe-v8.js" type="text/javascript"></script> -->
   <!-- <script src="ARjs/awe-loader.js" type="text/javascript"></script> -->
 
 
-<!-- Code for inserting media/AR -->
+  <!-- Code for inserting media/AR -->
   <script>
-
     //
     //
     // navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia;
@@ -233,7 +256,7 @@ fullScreen.addEventListener('click', function() {
     //           ],
     //           success: function() {
     //             // setup and paint the scene
-  	// 		        awe.setup_scene();
+    // 		        awe.setup_scene();
     //
     // 						// var click_plugin = awe.plugins.view('object_clicked');
     // 						// if (click_plugin) {
@@ -269,10 +292,10 @@ fullScreen.addEventListener('click', function() {
     //
     //
     //
-  	// 		        // add some points of interest (poi) for each of the compass points
+    // 		        // add some points of interest (poi) for each of the compass points
     //
     //             awe.pois.add({id: 'boxGuy', position: {x: 0, y: 20, z: 50}});
-  	// 		        // add projections to each of the pois
+    // 		        // add projections to each of the pois
     //
     //             awe.projections.add({
     //               id: 'z',
@@ -302,9 +325,6 @@ fullScreen.addEventListener('click', function() {
     //     }
     //   });
     // });
-
-
-
   </script>
 
 
