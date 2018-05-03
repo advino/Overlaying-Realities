@@ -123,12 +123,12 @@
             if (device.kind == 'videoinput') {
               availCam.push(device);
 
-              // if(availCam.length > 0) {
-              //   for(var i = 0; i < availCam.length; i++) {
-              //     console.log(availCam[i].label);
-              //
-              //   }
-              // }
+              if(availCam.length > 1) {
+                for(var i = 0; i < availCam.length; i++) {
+                  alert(availCam[i].label);
+
+                }
+              }
             }
 
             if (device.kind == 'videoinput') {
@@ -141,10 +141,10 @@
 
               if (availCam.length >= 2) {
                 deviceId = availCam[1].deviceId;
-                console.log("Device Selected: " + deviceId);
+                console.log("Device Selected: " + availCam[1].label);
               } else {
                 deviceId = availCam[0].deviceId;
-                console.log("Device Selected: " + deviceId);
+                console.log("Device Selected: " + availCam[0].label);
               }
 
 
@@ -196,11 +196,11 @@
       });
 
 
-      var videoContainer = document.createElement('div');
-      contain.appendChild(videoContainer);
-      videoContainer.appendChild(video);
-
-      videoContainer.webkitRequestFullScreen();
+      // var videoContainer = document.createElement('div');
+      // contain.appendChild(videoContainer);
+      // videoContainer.appendChild(video);
+      //
+      // videoContainer.webkitRequestFullScreen();
 
 
     });
