@@ -100,6 +100,7 @@
     var contain = document.getElementById('container');
 
     // camera based variables
+    var cameraCount = 0;
     var cameraType;
     var deviceKind,deviceLabel,deviceId;
 
@@ -117,6 +118,14 @@
       navigator.mediaDevices.enumerateDevices()
         .then(function(devices) {
           devices.forEach(function(device) {
+
+            if(device.kind == 'videoinput') {
+              cameraCount ++;
+              if(cameraCount > 0) {
+                alert("There are " + cameraCount + " cameras available");
+              }
+            }
+
             if (device.kind == 'videoinput') {
 
                 cameraType = [device.kind, device.label, device.deviceId];
@@ -172,11 +181,11 @@
         });
 
 
-      var videoContainer = document.createElement('div');
-      contain.appendChild(videoContainer);
-      videoContainer.appendChild(video);
-
-      videoContainer.webkitRequestFullScreen();
+      // var videoContainer = document.createElement('div');
+      // contain.appendChild(videoContainer);
+      // videoContainer.appendChild(video);
+      //
+      // videoContainer.webkitRequestFullScreen();
 
 
     });
