@@ -99,6 +99,11 @@
     var fullScreen = document.getElementById('fullScreen');
     var contain = document.getElementById('container');
 
+    // camera based variables
+    var cameraType;
+    var deviceKind,deviceLabel,deviceId;
+
+
     fullScreen.addEventListener('click', function() {
       navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia;
 
@@ -114,15 +119,17 @@
           devices.forEach(function(device) {
             if (device.kind == 'videoinput') {
 
-                var cameraType = [device.kind, device.label, device.deviceId];
+                cameraType = [device.kind, device.label, device.deviceId];
 
-                var deviceKind = cameraType[0];
-                var deviceLabel = cameraType[1];
-                var deviceId = cameraType[2];
+                deviceKind = cameraType[0];
+                deviceLabel = cameraType[1];
+                deviceId = cameraType[2];
 
-                var cameraList = document.createElement('p');
-                cameraList.innerHTML = deviceKind + "," + deviceLabel + "," + deviceId;
-                contain.appendChild(cameraList);
+                console.log(cameraType);
+
+                // var cameraList = document.createElement('p');
+                // cameraList.innerHTML = deviceKind + "," + deviceLabel + "," + deviceId;
+                // contain.appendChild(cameraList);
 
                 // var cameraType = document.createElement('p');
                 // cameraType.innerHTML = device.label;
@@ -139,39 +146,50 @@
           console.log(err.name + ": " + err.message);
         });
 
+        var video = document.createElement('video');
+        video.style.width = document.width + 'px';
+        video.style.height = document.height + 'px';
+        video.setAttribute('autoplay', '');
+        video.setAttribute('muted', '');
+        video.setAttribute('playsinline', '');
+
+        var facingMode = "environment";
+
+        var constraints = {
+          audio: false,
+          video: {
+            // facingMode: "environment",
+            deviceId: deviceId,
+            width: 1920,
+            height: 1080
+
+          }
+        }
+
+
+        navigator.mediaDevices.getUserMedia(constraints).then(function success(stream) {
+          video.srcObject = stream;
+        });
+
+
+      var videoContainer = document.createElement('div');
+      contain.appendChild(videoContainer);
+      videoContainer.appendChild(video);
+
+      videoContainer.webkitRequestFullScreen();
+
 
     });
 
 
 
-    // var video = document.createElement('video');
-    // video.style.width = document.width + 'px';
-    // video.style.height = document.height + 'px';
-    // video.setAttribute('autoplay', '');
-    // video.setAttribute('muted', '');
-    // video.setAttribute('playsinline', '');
-    //
-    // var facingMode = "environment";
-    //
-    // var constraints = {
-    //   audio: false,
-    //   video: {
-    //     facingMode: "environment",
-    //     deviceId: deviceId;
-    //     width: 1920,
-    //     height: 1080
-    //
-    //   }
-    // }
-    //
-    //
-    // navigator.mediaDevices.getUserMedia(constraints).then(function success(stream) {
-    //   video.srcObject = stream;
-    // });
+
+
+
+
     //
     // fullScreen.addEventListener('click', function() {
     //   fullScreen.innerHTML = "Loading...";
-    //   var videoContainer = document.createElement('div');
     //
     //   videoContainer.style.width = '100%';
     //   videoContainer.style.height = '100%';
