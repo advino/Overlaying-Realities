@@ -105,7 +105,7 @@
     var cameraCount = 0;
     var availCam = [];
     var cameraType;
-    var deviceKind, deviceLabel, idNum;
+    var deviceKind, deviceLabel, id;
 
 
     fullScreen.addEventListener('click', function() {
@@ -182,9 +182,9 @@
 
 
       navigator.mediaDevices.getUserMedia(constraints).then(function success(stream) {
-        // var videoTracks = stream.getVideoTracks()[1];
-        // alert(videoTracks.label);
-        // videoTracks.applyConstraints(constraints);
+        var videoTracks = stream.getVideoTracks()[0];
+        alert(videoTracks.label);
+        videoTracks.stop();
         video.srcObject = stream;
       });
 
