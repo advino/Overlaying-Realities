@@ -95,7 +95,7 @@
   </div>
 
 
-<script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
+  <script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
   <script>
     // DOM elements
     var fullScreen = document.getElementById('fullScreen');
@@ -132,26 +132,10 @@
 
               if (availCam.length >= 0) {
                 id = availCam[1].deviceId;
-                console.log("Device Selected: " + availCam[1].label);
+                console.log("Device Selected: " + availCam[0s].label);
                 videoSource = id;
                 console.log("Source ID: " + videoSource);
               }
-
-
-
-              // console.log(cameraType);
-
-              // var cameraList = document.createElement('p');
-              // cameraList.innerHTML = deviceKind + "," + deviceLabel + "," + deviceId;
-              // contain.appendChild(cameraList);
-
-              // var cameraType = document.createElement('p');
-              // cameraType.innerHTML = device.label;
-              // contain.appendChild(cameraType);
-
-
-              // console.log(device.kind + ": " + device.label +
-              //   " id = " + device.deviceId);
 
             }
           });
@@ -182,16 +166,21 @@
         }
       }
 
+      function gotStream(stream) {
+        window.stream = stream; // make stream available to console
+        video.srcObject = stream;
+        // Refresh button list in case labels have become available
+        return navigator.mediaDevices.enumerateDevices();
+      }
 
-
-      navigator.mediaDevices.getUserMedia(constraints).then(function success(stream) {
+      navigator.mediaDevices.getUserMedia(constraints).then(gotStream).then(function success(stream) {
         // var videoTracks = stream.getVideoTracks()[0];
         // alert(videoTracks.label);
         // videoTracks.stop();
-        if(id) {
-          video.srcObject = stream;
-            
-        }
+        // if (id) {
+        //   video.srcObject = stream;
+        //
+        // }
       });
 
 
