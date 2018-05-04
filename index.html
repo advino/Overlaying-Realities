@@ -106,6 +106,7 @@
     var availCam = [];
     var cameraType;
     var deviceKind, deviceLabel, id;
+    var videoSource;
 
 
     fullScreen.addEventListener('click', function() {
@@ -132,6 +133,8 @@
               if (availCam.length >= 2) {
                 id = availCam[1].deviceId;
                 alert("Device Selected: " + availCam[1].label);
+                videoSource = id.value;
+                console.log("Source ID: " + videoSource);
               }
 
 
@@ -172,7 +175,7 @@
         audio: false,
         video: {
           // facingMode: 'back',
-          deviceId: 'id',
+          deviceId: videoSource,
           // width: 1920,
           // height: 1080
 
@@ -182,9 +185,9 @@
 
 
       navigator.mediaDevices.getUserMedia(constraints).then(function success(stream) {
-        var videoTracks = stream.getVideoTracks()[0];
-        alert(videoTracks.label);
-        videoTracks.stop();
+        // var videoTracks = stream.getVideoTracks()[0];
+        // alert(videoTracks.label);
+        // videoTracks.stop();
         video.srcObject = stream;
       });
 
