@@ -105,13 +105,19 @@
     var fullScreen = document.getElementById('fullScreen');
     var contain = document.getElementById('container');
     var video = document.createElement('video');
+    video.setAttribute('autoplay', '');
+    //   video.setAttribute('muted', '');
+    //   video.setAttribute('playsinline', '');
+
     var videoSelect = document.querySelector('select');
 
     var videoContainer = document.createElement('div');
-    videoContainer.appendChild(video);
-    contain.insertBefore(videoContainer, fullScreen);
 
-    navigator.mediaDevices.enumerateDevices().then(function(devices) {
+
+
+    function gotDevices(devices) {
+
+
       devices.forEach(function(devices){
         if(devices.kind == 'videoinput') {
           var option = document.createElement('option');
@@ -121,22 +127,25 @@
           videoSelect.appendChild(option);
         }
       })
-    }).catch(function(err) {
+    }
+
+    navigator.mediaDevices.enumerateDevices().then(gotDevices).catch(function(err) {
       console.log(err.name + ": " + err.message);
     });
 
     function gotStream(stream) {
-      // window.stream = stream;
+      window.stream = stream;
       video.srcObject = stream;
       return navigator.mediaDevices.enumerateDevices();
     }
 
     function launchApp() {
-      // if(window.stream) {
-      //   window.stream.getTracks().forEach(function(tracks){
-      //     tracks.stop();
-      //   });
-      // }
+
+      if(window.stream) {
+        window.stream.getTracks().forEach(function(tracks){
+          tracks.stop();
+        });
+      }
 
       var videoSource = videoSelect.value;
 
@@ -148,7 +157,7 @@
       }
 
       navigator.mediaDevices.getUserMedia(constraints).
-          then(gotStream).catch(function(error) {
+          then(gotStream).then(gotDevices).catch(function(error) {
             console.log('navigator.getUserMedia error: ', error);
       })
     }
@@ -163,7 +172,8 @@
 
 
     fullScreen.addEventListener('click', function() {
-
+      videoContainer.appendChild(video);
+      contain.insertBefore(videoContainer, fullScreen);
       videoContainer.webkitRequestFullScreen();
 
     });
