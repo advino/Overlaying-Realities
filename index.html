@@ -130,7 +130,7 @@
 
 
               if (availCam.length >= 2) {
-                // idNum = availCam[1].deviceId;
+                idNum = availCam[1].deviceId;
                 alert("Device Selected: " + availCam[1].label);
               }
 
@@ -172,7 +172,7 @@
         audio: false,
         video: {
           // facingMode: 'back',
-          deviceId: 'availCam[1].deviceId',
+          deviceId: 'idNum',
           width: 1920,
           height: 1080
 
