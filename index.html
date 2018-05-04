@@ -130,11 +130,11 @@
             if (device.kind == 'videoinput') {
 
 
-              if (availCam.length >= 2) {
+              if (availCam.length >= 0) {
                 id = availCam[1].deviceId;
-                alert("Device Selected: " + availCam[1].label);
-                videoSource = id.value;
-                alert("Source ID: " + id);
+                console.log("Device Selected: " + availCam[1].label);
+                videoSource = id;
+                console.log("Source ID: " + videoSource);
               }
 
 
@@ -175,7 +175,7 @@
         audio: false,
         video: {
           // facingMode: 'back',
-          deviceId: videoSource,
+          deviceId: id,
           // width: 1920,
           // height: 1080
 
@@ -188,7 +188,10 @@
         // var videoTracks = stream.getVideoTracks()[0];
         // alert(videoTracks.label);
         // videoTracks.stop();
-        video.srcObject = stream;
+        if(id) {
+          video.srcObject = stream;
+            
+        }
       });
 
 
