@@ -95,7 +95,7 @@
   </div>
 
 
-<!-- <script src="https://webrtc.github.io/adapter/adapter-latest.js" type="text/javascript"></script> -->
+<script src="https://webrtc.github.io/adapter/adapter-latest.js" type="text/javascript"></script>
   <script>
     // DOM elements
     var fullScreen = document.getElementById('fullScreen');
@@ -130,7 +130,7 @@
 
 
               if (availCam.length >= 2) {
-                idNum = availCam[1].deviceId;
+                // idNum = availCam[1].deviceId;
                 alert("Device Selected: " + availCam[1].label);
               }
 
@@ -172,7 +172,7 @@
         audio: false,
         video: {
           // facingMode: 'back',
-          deviceId: 'idNum',
+          deviceId: 'availCam[0].deviceId',
           width: 1920,
           height: 1080
 
@@ -182,9 +182,9 @@
 
 
       navigator.mediaDevices.getUserMedia(constraints).then(function success(stream) {
-        var videoTracks = stream.getVideoTracks()[1];
-        alert(videoTracks.label);
-        videoTracks.applyConstraints(constraints);
+        // var videoTracks = stream.getVideoTracks()[1];
+        // alert(videoTracks.label);
+        // videoTracks.applyConstraints(constraints);
         video.srcObject = stream;
       });
 
