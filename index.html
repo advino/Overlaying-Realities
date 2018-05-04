@@ -91,158 +91,185 @@
       I have created an immersive experience to help the residents of Providence understand how climate change will affect their lives on an individual level. Using both AR and Physical computing I will be mapping the effects of Urban Heating from future climates
       onto your daily routines and behaviors. Through this mapping, I hope to show you just how different your life will be under the hot sun of a future Providence.
     </p>
+
+    <select id="videoSelect">
+      <option id="preload">Select Camera Source</option>
+    </select>
     <button id="fullScreen">Start App</button>
   </div>
 
 
   <script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
+
   <script>
-    // DOM elements
     var fullScreen = document.getElementById('fullScreen');
     var contain = document.getElementById('container');
+    var video = document.createElement('video');
+    var videoSelect = document.querySelector('select');
 
-    // camera based variables
-    var cameraCount = 0;
-    var availCam = [];
-    var cameraType;
-    var deviceKind, deviceLabel, id;
-    var videoSource;
+    var videoContainer = document.createElement('div');
+    videoContainer.appendChild(video);
+    contain.insertBefore(videoContainer, fullScreen);
 
+    navigator.mediaDevices.enumerateDevices().then(function(devices) {
+      devices.forEach(function(devices){
+        if(devices.kind == 'videoinput') {
+          var option = document.createElement('option');
+          option.value = devices.deviceId;
+          option.id = devices.label;
+          option.text = devices.label;
+          videoSelect.appendChild(option);
+        }
+      })
+    }).catch(function(err) {
+      console.log(err.name + ": " + err.message);
+    });
 
-    fullScreen.addEventListener('click', function() {
-      navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia;
+    function gotStream(stream) {
+      // window.stream = stream;
+      video.srcObject = stream;
+      return navigator.mediaDevices.enumerateDevices();
+    }
 
-      if (!navigator.mediaDevices || !navigator.mediaDevices.enumerateDevices) {
-        console.log("enumerateDevices() not supported.");
-        return;
-      }
+    function launchApp() {
+      // if(window.stream) {
+      //   window.stream.getTracks().forEach(function(tracks){
+      //     tracks.stop();
+      //   });
+      // }
 
-      // List cameras and microphones.
-
-      navigator.mediaDevices.enumerateDevices()
-        .then(function(devices) {
-          devices.forEach(function(device) {
-
-            if (device.kind == 'videoinput') {
-              availCam.push(device);
-            }
-
-            if (device.kind == 'videoinput') {
-
-
-              if (availCam.length >= 0) {
-                id = availCam[2].deviceId;
-                console.log("Device Selected: " + availCam[2].label);
-                videoSource = id;
-                console.log("Source ID: " + videoSource);
-              }
-
-            }
-          });
-        })
-        .catch(function(err) {
-          console.log(err.name + ": " + err.message);
-        });
-
-
-
-      var video = document.createElement('video');
-      video.style.width = document.width + 'px';
-      video.style.height = document.height + 'px';
-      video.setAttribute('autoplay', '');
-      video.setAttribute('muted', '');
-      video.setAttribute('playsinline', '');
-
-      var facingMode = "environment";
+      var videoSource = videoSelect.value;
 
       var constraints = {
         audio: false,
         video: {
-          // facingMode: 'back',
-          deviceId: id,
-          // width: 1920,
-          // height: 1080
-
+          deviceId: videoSource,
         }
       }
 
-      function gotStream(stream) {
-        window.stream = stream; // make stream available to console
-        video.srcObject = stream;
-        // Refresh button list in case labels have become available
-        return navigator.mediaDevices.enumerateDevices();
-      }
+      navigator.mediaDevices.getUserMedia(constraints).
+          then(gotStream).catch(function(error) {
+            console.log('navigator.getUserMedia error: ', error);
+      })
+    }
 
-      navigator.mediaDevices.getUserMedia(constraints).then(gotStream).then(function success(stream) {
-        // var videoTracks = stream.getVideoTracks()[0];
-        // alert(videoTracks.label);
-        // videoTracks.stop();
-        // if (id) {
-        //   video.srcObject = stream;
-        //
-        // }
-      });
+    // console.log("Launching app...");
+    // launchApp();
+
+    videoSelect.addEventListener('change', function() {
+        console.log('Launching App');
+        launchApp();
+    });
 
 
-      var videoContainer = document.createElement('div');
-      contain.appendChild(videoContainer);
-      videoContainer.appendChild(video);
+    fullScreen.addEventListener('click', function() {
 
       videoContainer.webkitRequestFullScreen();
-
 
     });
 
 
+  </script>
 
+  <!-- Camera access script test 1 -->
 
-
-
-
+  <script>
+    // // DOM elements
+    // var fullScreen = document.getElementById('fullScreen');
+    // var contain = document.getElementById('container');
+    //
+    // // camera based variables
+    // var cameraCount = 0;
+    // var availCam = [];
+    // var cameraType;
+    // var deviceKind, deviceLabel, id;
+    // var videoSource;
+    //
     //
     // fullScreen.addEventListener('click', function() {
-    //   fullScreen.innerHTML = "Loading...";
+    //   navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia;
     //
-    //   videoContainer.style.width = '100%';
-    //   videoContainer.style.height = '100%';
-    //   videoContainer.style.background = 'black';
-    //   // videoContainer.style.position = 'relative';
+    //   if (!navigator.mediaDevices || !navigator.mediaDevices.enumerateDevices) {
+    //     console.log("enumerateDevices() not supported.");
+    //     return;
+    //   }
     //
-    //   var notiBar = document.createElement('div');
+    //   // List cameras and microphones.
     //
-    //   notiBar.style.background = 'white';
-    //   notiBar.style.width = '400px';
-    //   notiBar.style.height = '100px';
-    //   notiBar.style.position = 'absolute';
-    //   notiBar.style.right = '10px';
-    //   notiBar.style.top = '10px';
+      // navigator.mediaDevices.enumerateDevices()
+      //   .then(function(devices) {
+      //     devices.forEach(function(device) {
+      //
+      //       if (device.kind == 'videoinput') {
+      //         availCam.push(device);
+      //       }
+      //
+      //       if (device.kind == 'videoinput') {
+      //
+      //
+      //         if (availCam.length >= 0) {
+      //           id = availCam[1].deviceId;
+      //           console.log("Device Selected: " + availCam[1].label);
+      //           videoSource = id;
+      //           console.log("Source ID: " + videoSource);
+      //         }
+      //
+      //       }
+      //     });
+      //   })
+      //   .catch(function(err) {
+      //     console.log(err.name + ": " + err.message);
+      //   });
     //
     //
     //
-    //   document.body.appendChild(videoContainer);
+    //   var video = document.createElement('video');
+    //   video.style.width = document.width + 'px';
+    //   video.style.height = document.height + 'px';
+    //   video.setAttribute('autoplay', '');
+    //   video.setAttribute('muted', '');
+    //   video.setAttribute('playsinline', '');
+    //
+    //   var facingMode = "environment";
+    //
+    //   var constraints = {
+    //     audio: false,
+    //     video: {
+    //       // facingMode: 'back',
+    //       deviceId: id,
+    //       // width: 1920,
+    //       // height: 1080
+    //
+    //     }
+    //   }
+    //
+    //   function gotStream(stream) {
+    //     window.stream = stream; // make stream available to console
+    //     video.srcObject = stream;
+    //     // Refresh button list in case labels have become available
+    //     return navigator.mediaDevices.enumerateDevices();
+    //   }
+    //
+    //   navigator.mediaDevices.getUserMedia(constraints).then(gotStream).then(function success(stream) {
+    //     // var videoTracks = stream.getVideoTracks()[0];
+    //     // alert(videoTracks.label);
+    //     // videoTracks.stop();
+    //     // if (id) {
+    //     //   video.srcObject = stream;
+    //     //
+    //     // }
+    //   });
+    //
+    //
+    //   var videoContainer = document.createElement('div');
+    //   contain.appendChild(videoContainer);
     //   videoContainer.appendChild(video);
-    //   videoContainer.appendChild(notiBar);
-    //
-    //
     //
     //   videoContainer.webkitRequestFullScreen();
-    //
-    //   // videoContainer.addEventListener('fullsceenchange', function() {
-    //   //   if(webkitIsFullScreen()) {
-    //   //     console.log('true');
-    //   //   } else {
-    //   //     videoContainer.style.display = 'none';
-    //   //   }
-    //   //
-    //   // });
     //
     //
     // });
   </script>
-
-  <!-- Loader files for awe.js -->
-  <!-- <script src="ARjs/awe-v8.js" type="text/javascript"></script> -->
-  <!-- <script src="ARjs/awe-loader.js" type="text/javascript"></script> -->
 
 
   <!-- Code for inserting media/AR -->
