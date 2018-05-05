@@ -90,6 +90,24 @@
       margin-top: 30px;
       width: 75%;
     }
+
+    #noteBar {
+      display: block;
+      padding: 10px;
+      opacity: .75;
+      position: absolute;
+      background: white;
+      width: 25%;
+      height: 20%;
+      top: 80px;
+      right: 40px;
+    }
+
+    #textDisplay {
+      display: block;
+      word-wrap: break-word;
+    }
+
   </style>
 
 </head>
@@ -142,7 +160,8 @@
         var Lon = position.coords.longitude;
         console.log(Lat + "," + Lon);
         var display = document.createElement('p');
-        display.innerHTML = Lat + "," + Lon;
+        display.id = 'textDisplay';
+        display.innerHTML = 'Latitude: ' + Lat + "<br>Longitude: " + Lon;
         noteBar.appendChild(display);
     }
 
@@ -246,13 +265,7 @@
 
     fullScreen.addEventListener('click', function() {
 
-      noteBar.style.display = 'block';
-      noteBar.style.position = 'absolute';
-      noteBar.style.background = 'white';
-      noteBar.style.width = '200px';
-      noteBar.style.height = '50px';
-      noteBar.style.top = '80px';
-      noteBar.style.right = '40px';
+      noteBar.id = 'noteBar';
 
       videoContainer.appendChild(video);
       videoContainer.appendChild(noteBar);
