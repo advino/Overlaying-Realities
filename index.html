@@ -164,6 +164,8 @@
 
 
 
+
+
     // Some code to check if the current device can access user media
 
     function hasGetUserMedia() {
@@ -271,7 +273,8 @@
       contain.insertBefore(videoContainer, fullScreen);
       videoContainer.webkitRequestFullScreen();
 
-      getLocation();
+      setInterval(getLocation(), 1000);
+
 
 
     });
