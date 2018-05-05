@@ -159,7 +159,8 @@
     function showPosition(position) {
         var crds = position.coords
         console.log(crds);
-        display.innerHTML = 'Latitude: ' + crds.latitude + "<br>Longitude: " + crds.longitude;
+        display.innerHTML = 'Latitude: ' +
+        crds.latitude + "<br>Longitude: " + crds.longitude + "<br>Accuracy: " + crds.accuracy;
         // if(noteBar.childElementCount > 0) {
         //   noteBar.removeChild(noteBar.firstChild);
         // }
