@@ -147,8 +147,9 @@
     // Some code to detect current location
 
     function getLocation() {
+
       if (navigator.geolocation) {
-        console.log('location available');
+        // console.log('location available');
         navigator.geolocation.watchPosition(showPosition);
       } else {
         console.log('location not available');
@@ -276,7 +277,7 @@
       contain.insertBefore(videoContainer, fullScreen);
       videoContainer.webkitRequestFullScreen();
 
-      getLocation();
+      setInterval(getLocation, 3000);
 
 
 
