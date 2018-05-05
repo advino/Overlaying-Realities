@@ -70,6 +70,15 @@
       font-size: 16px;
 
     }
+
+    #videoSelect {
+      display: block;
+      margin: auto;
+      margin-top: 30px;
+      width: 75%;
+    }
+
+
   </style>
 
 </head>
@@ -91,9 +100,11 @@
       onto your daily routines and behaviors. Through this mapping, I hope to show you just how different your life will be under the hot sun of a future Providence.
     </p>
 
+
     <select id="videoSelect">
       <option id="preload">Select Camera Source</option>
     </select>
+
     <button id="fullScreen">Start App</button>
   </div>
 
@@ -126,12 +137,11 @@
   video.setAttribute('playsinline', '');
   var videoSelect = document.querySelector('select');
   var videoContainer = document.createElement('div');
+  videoContainer.style.position = 'relative';
 
   // Some code to cycle through available devices and add them to the select menu
 
   function gotDevices(devices) {
-
-    
 
     devices.forEach(function(devices){
       if(devices.kind == 'videoinput') {
@@ -193,7 +203,17 @@
   // Some code to append the video to the main container and to make the element fullscreen
 
   fullScreen.addEventListener('click', function() {
+    var noteBar = document.createElement('div');
+    noteBar.style.display = 'block';
+    noteBar.style.position = 'absolute';
+    noteBar.style.background = 'white';
+    noteBar.style.width = '200px';
+    noteBar.style.height = '50px';
+    noteBar.style.top = '10px';
+    noteBar.style.right = '10px';
+
     videoContainer.appendChild(video);
+    videoContainer.appendChild(noteBar);
     contain.insertBefore(videoContainer, fullScreen);
     videoContainer.webkitRequestFullScreen();
 
