@@ -150,7 +150,7 @@
 
       if (navigator.geolocation) {
         // console.log('location available');
-        navigator.geolocation.watchPosition(showPosition);
+        var geoLoc = navigator.geolocation.watchPosition(showPosition);
       } else {
         console.log('location not available');
       }
@@ -163,7 +163,6 @@
         // if(noteBar.childElementCount > 0) {
         //   noteBar.removeChild(noteBar.firstChild);
         // }
-        noteBar.appendChild(display);
     }
 
 
@@ -273,6 +272,7 @@
 
       videoContainer.appendChild(video);
       videoContainer.appendChild(noteBar);
+      noteBar.appendChild(display);
       contain.insertBefore(videoContainer, fullScreen);
       videoContainer.webkitRequestFullScreen();
 
