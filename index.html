@@ -149,7 +149,7 @@
     function getLocation() {
       if (navigator.geolocation) {
         console.log('location available');
-        console.log(navigator.geolocation.getCurrentPosition(showPosition));
+        navigator.geolocation.watchPosition(showPosition);
       } else {
         console.log('location not available');
       }
