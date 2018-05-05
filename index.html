@@ -160,6 +160,10 @@
         var Lon = position.coords.longitude;
         console.log(Lat + "," + Lon);
         display.innerHTML = 'Latitude: ' + Lat + "<br>Longitude: " + Lon;
+        if(noteBar.childElementCount > 0) {
+          noteBar.removeChild(noteBar.firstChild);
+        }
+        noteBar.appendChild(display);
     }
 
 
@@ -269,11 +273,10 @@
 
       videoContainer.appendChild(video);
       videoContainer.appendChild(noteBar);
-      noteBar.appendChild(display);
       contain.insertBefore(videoContainer, fullScreen);
       videoContainer.webkitRequestFullScreen();
 
-      setInterval(getLocation(), 1000);
+      setInterval(getLocation(), 3000);
 
 
 
