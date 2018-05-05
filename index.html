@@ -157,10 +157,9 @@
     }
 
     function showPosition(position) {
-        var Lat = position.coords.latitude;
-        var Lon = position.coords.longitude;
-        console.log(Lat + "," + Lon);
-        display.innerHTML = 'Latitude: ' + Lat + "<br>Longitude: " + Lon;
+        var crds = position.coords
+        console.log(crds);
+        display.innerHTML = 'Latitude: ' + crds.latitude + "<br>Longitude: " + crds.longitude;
         // if(noteBar.childElementCount > 0) {
         //   noteBar.removeChild(noteBar.firstChild);
         // }
@@ -277,7 +276,7 @@
       contain.insertBefore(videoContainer, fullScreen);
       videoContainer.webkitRequestFullScreen();
 
-      setInterval(getLocation, 3000);
+      getLocation();
 
 
 
