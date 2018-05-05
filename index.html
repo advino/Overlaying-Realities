@@ -150,7 +150,7 @@
 
       if (navigator.geolocation) {
         // console.log('location available');
-        var geoLoc = navigator.geolocation.watchPosition(showPosition);
+        var geoLoc = navigator.geolocation.watchPosition(showPosition, showError, options);
       } else {
         console.log('location not available');
       }
@@ -160,13 +160,22 @@
         var crds = position.coords
         console.log(crds);
         display.innerHTML = 'Latitude: ' +
-        crds.latitude + "<br>Longitude: " + crds.longitude + "<br>Accuracy: " + crds.accuracy;
+        crds.latitude.toFixed(6) + "<br>Longitude: " + crds.longitude.toFixed(6) + "<br>Accuracy: " + crds.accuracy;
         // if(noteBar.childElementCount > 0) {
         //   noteBar.removeChild(noteBar.firstChild);
         // }
     }
 
+    function showError(err) {
 
+      console.log('There is an error');
+    }
+
+    var options = {
+      enableHighAccuracy:true,
+      maximumAge:0,
+      timeout:30000
+    }
 
 
 
