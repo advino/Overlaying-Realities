@@ -97,14 +97,18 @@
       opacity: .75;
       position: absolute;
       background: white;
-      width: 25%;
-      height: 20%;
+      width: auto;
+      height: auto;
+      max-width: 25%;
+      max-height: 20%;
       top: 80px;
       right: 40px;
     }
 
     #textDisplay {
       display: block;
+      font-family: Maison Neue;
+      font-style: 10px;
       word-wrap: break-word;
     }
 
@@ -144,6 +148,25 @@
   </script>
   <script>
 
+  // DOM Elements
+
+  var fullScreen = document.getElementById('fullScreen');
+  var contain = document.getElementById('container');
+  var noteBar = document.createElement('div');
+  noteBar.id = 'noteBar';
+  var display = document.createElement('p');
+  display.id = 'textDisplay';
+  var video = document.createElement('video');
+  video.style.width = '100%';
+  video.style.height = '100%';
+  video.setAttribute('autoplay', '');
+  video.setAttribute('muted', '');
+  video.setAttribute('playsinline', '');
+  var videoSelect = document.querySelector('select');
+  var videoContainer = document.createElement('div');
+  videoContainer.style.position = 'relative';
+
+
     // Some code to detect current location
 
     function getLocation() {
@@ -160,10 +183,7 @@
         var crds = position.coords
         console.log(crds);
         display.innerHTML = 'Latitude: ' +
-        crds.latitude.toFixed(6) + "<br>Longitude: " + crds.longitude.toFixed(6) + "<br>Accuracy: " + crds.accuracy;
-        // if(noteBar.childElementCount > 0) {
-        //   noteBar.removeChild(noteBar.firstChild);
-        // }
+        crds.latitude.toFixed(6) + "<br>Longitude: " + crds.longitude.toFixed(6);
     }
 
     function showError(err) {
@@ -195,23 +215,6 @@
     }
 
 
-    // DOM Elements
-
-    var fullScreen = document.getElementById('fullScreen');
-    var contain = document.getElementById('container');
-    var noteBar = document.createElement('div');
-    noteBar.id = 'noteBar';
-    var display = document.createElement('p');
-    display.id = 'textDisplay';
-    var video = document.createElement('video');
-    video.style.width = '100%';
-    video.style.height = '100%';
-    video.setAttribute('autoplay', '');
-    video.setAttribute('muted', '');
-    video.setAttribute('playsinline', '');
-    var videoSelect = document.querySelector('select');
-    var videoContainer = document.createElement('div');
-    videoContainer.style.position = 'relative';
 
     // Some code to cycle through available devices and add them to the select menu
 
@@ -290,7 +293,6 @@
       noteBar.addEventListener('click', getLocation)
 
     });
-
 
   </script>
 
