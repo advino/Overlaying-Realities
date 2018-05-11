@@ -8,6 +8,8 @@
   <title>WebApp Demo</title>
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://threejs.org/build/three.min.js" type="text/javascript"></script>
+  <script src="three.js/examples/js/effects/StereoEffect.js"></script>
 
   <style type="text/css">
     @font-face {
@@ -73,6 +75,7 @@
 
     #videoContainer {
       display: block;
+      position: relative;
       margin: auto;
       width: 100%;
       height: 100%;
@@ -112,6 +115,19 @@
       word-wrap: break-word;
     }
 
+    #infoCard {
+      display: block;
+      position: absolute;
+      background-color: white;
+      top: 200px;
+      right: 200px;
+    }
+
+    #videoContainer {
+      width: auto;
+      height: auto;
+    }
+
   </style>
 
 </head>
@@ -147,25 +163,41 @@
   <script>
   </script>
   <script>
+    // DOM Elements
 
-  // DOM Elements
+    var fullScreen = document.getElementById('fullScreen');
+    var contain = document.getElementById('container');
+    var noteBar = document.createElement('div');
+    noteBar.id = 'noteBar';
+    var display = document.createElement('p');
+    display.id = 'textDisplay';
+    var video = document.createElement('video');
+    video.style.display = 'none';
+    video.style.width = '100%';
+    video.style.height = '100%';
+    video.setAttribute('autoplay', '');
+    video.setAttribute('muted', '');
+    video.setAttribute('playsinline', '');
+    var videoSelect = document.querySelector('select');
+    var videoContainer = document.createElement('div');
+    // videoContainer.style.position = 'relative';
+    videoContainer.id = 'videoContainer';
 
-  var fullScreen = document.getElementById('fullScreen');
-  var contain = document.getElementById('container');
-  var noteBar = document.createElement('div');
-  noteBar.id = 'noteBar';
-  var display = document.createElement('p');
-  display.id = 'textDisplay';
-  var video = document.createElement('video');
-  video.style.width = '100%';
-  video.style.height = '100%';
-  video.setAttribute('autoplay', '');
-  video.setAttribute('muted', '');
-  video.setAttribute('playsinline', '');
-  var videoSelect = document.querySelector('select');
-  var videoContainer = document.createElement('div');
-  videoContainer.style.position = 'relative';
+    //Array for location data. Includes latitude, longitude, and the name of the location
 
+    var locationData = [
+      [41.823221, -71.405951], // Latitude, Longitude, eventually Location Name
+      [41.823509, -71.406211],
+      [41.823177, -71.405777],
+    ]
+
+    //Info object stores the lat longitude and name of the area specified
+
+    var infoCard = function(lat, lon, name) {
+      this.lat = lat;
+      this.lon = lon;
+      this.name = name;
+    }
 
     // Some code to detect current location
 
@@ -180,10 +212,11 @@
     }
 
     function showPosition(position) {
-        var crds = position.coords
-        console.log(crds);
-        display.innerHTML = 'Latitude: ' +
+      var crds = position.coords
+      console.log(crds);
+      display.innerHTML = 'Latitude: ' +
         crds.latitude.toFixed(6) + "<br>Longitude: " + crds.longitude.toFixed(6);
+      checkLocation(crds);
     }
 
     function showError(err) {
@@ -192,12 +225,34 @@
     }
 
     var options = {
-      enableHighAccuracy:true,
-      maximumAge:0,
-      timeout:30000
+      enableHighAccuracy: true,
+      maximumAge: 0,
+      timeout: 30000
     }
 
+    //Some code to cycle through the location data, if current location matches a target then a notification is created.
 
+    function checkLocation(crds) {
+      for (var i = 0; i < locationData.length; i++) {
+        if (crds.latitude.toFixed(6) == locationData[i][0] && crds.longitude.toFixed(6) == locationData[i][1]) {
+          createNote(crds.latitude, crds.longitude);
+        } else {
+          console.log('no target location hit...');
+        }
+      }
+    }
+
+    //Some code to create a notification
+
+    function createNote(latitude, longitude) {
+      var info = new infoCard(latitude, longitude, "Target Location");
+      var card = document.createElement('div');
+      card.innerHTML = "Latitude: " + info.lat + "<br>Longitude: " + info.lon + "<br>Name: " + info.name;
+      card.id = "infoCard";
+      videoContainer.appendChild(card);
+      // $('infoCard').hide().delay(250).fadeIn(500);
+
+    }
 
     // Some code to check if the current device can access user media
 
@@ -213,8 +268,6 @@
 
       alert('getUserMedia aint available');
     }
-
-
 
     // Some code to cycle through available devices and add them to the select menu
 
@@ -242,6 +295,7 @@
     function gotStream(stream) {
       window.stream = stream;
       video.srcObject = stream;
+      startTHREE();
       return navigator.mediaDevices.enumerateDevices();
     }
 
@@ -279,20 +333,105 @@
       launchApp();
     });
 
+
+    //ALL THE THREEJS BULLSHIT VARIABLES
+    //These have to be global I guess?
+    var camera, renderer, scene, effect;
+    var videoTexture;
+    var canvas;
+
+    //This function initiates the elements needed to build a Three.js scene
+    function startTHREE() {
+
+      //Code for Three.js renderer
+
+      renderer = new THREE.WebGLRenderer();
+      videoContainer.appendChild(renderer.domElement);
+
+      effect = new THREE.StereoEffect(renderer);
+      effect.setSize(container.clientWidth + 100, container.clientHeight);
+
+
+      // renderer.setClearColorHex(0x000000, 0); Ignore this, I haven't really figured out what it does.
+      // renderer.clear();
+
+      //Code for Three.js camera
+      var aspect = container.clientWidth / container.clientHeight; //This is basically saying that our Three.js canvas takes up the entire div space
+      camera = new THREE.PerspectiveCamera(35, aspect, 1, 3000);
+      camera.position.z = 500;
+
+      scene = new THREE.Scene();
+
+
+
+      //Code for the Three.js object (In this case it is a plane)
+      var geometry = new THREE.PlaneGeometry(200, 200); //Setting the plane size to the video aspect ratio keeps things from getting warped
+
+
+      //We set the video as a texture, and map it to the plane
+      videoTexture = new THREE.Texture(video);
+      videoTexture.minFilter = THREE.LinearFilter;
+      var material = new THREE.MeshLambertMaterial({
+        map: videoTexture
+      });
+      var plane = new THREE.Mesh(geometry, material);
+      scene.add(plane);
+
+
+      // -- LIGHTs
+      //Apparently you need light to make the whole thing work? Idk
+      var light = new THREE.DirectionalLight(0xffffff, 0.6); // color, intens.
+      light.position.set(0, 0, 1); // SW directional light
+      var light2 = new THREE.PointLight(0xffffff, 0.6); // color, intens.
+      light2.position.set(200, 200, 300); // NE point light
+      var light3 = new THREE.DirectionalLight(0xffffff, 0.5); // color, intens.
+      light3.position.set(0, 0, 1); // frontal light
+      scene.add(light);
+      scene.add(light2);
+      scene.add(light3); // add them all
+
+
+
+      //All I'm doing here is just saying that every time I click the canvas it goes fullscreen
+
+
+      // canvas.onclick = function() {
+      //   canvas.webkitRequestFullScreen();
+      // }
+
+      animate();
+
+    }
+
+    //This basically updates the canvas continously with the video.
+    function animate() {
+      if (video.readyState === video.HAVE_ENOUGH_DATA) {
+        videoTexture.needsUpdate = true;
+      }
+
+      effect.render(scene, camera);
+      requestAnimationFrame(animate);
+    }
+
+
+
     // Some code to append the video to the main container and to make the element fullscreen
 
     fullScreen.addEventListener('click', function() {
 
-      videoContainer.appendChild(video);
-      videoContainer.appendChild(noteBar);
+      // videoContainer.appendChild(video);
+      // videoContainer.appendChild(noteBar);
       noteBar.appendChild(display);
       contain.insertBefore(videoContainer, fullScreen);
-      videoContainer.webkitRequestFullScreen();
-
-      getLocation();
-      noteBar.addEventListener('click', getLocation)
+      // videoContainer.webkitRequestFullScreen();
+      canvas = document.querySelector('canvas');
+      canvas.webkitRequestFullScreen();
+      // getLocation();
+      // noteBar.addEventListener('click', getLocation)
 
     });
+
+
 
   </script>
 
