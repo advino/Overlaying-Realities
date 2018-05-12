@@ -163,6 +163,17 @@
   <script>
   </script>
   <script>
+
+    var isMobile = {
+      iOS: function() {
+        return navigator.userAgent.match(/iPhone|iPad|iPod/i);
+      }
+    }
+
+    if(isMobile.iOS()) {
+      alert('This app currently is not compatible with iPhone! Sorry!');
+    }
+
     // DOM Elements
 
     var fullScreen = document.getElementById('fullScreen');
