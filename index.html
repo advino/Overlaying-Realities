@@ -82,10 +82,6 @@
 
     }
 
-    /* #videoContainer: -webkit-full-screen {
-      width: 100%;
-      height: 100%;
-    } */
 
     #videoSelect {
       display: block;
@@ -133,7 +129,14 @@
       padding: 2px;
       opacity: .75;
       text-align: center;
-      
+
+    }
+
+    #rightUI {
+      background-color: white;
+      padding: 2px;
+      opacity: .75;
+      text-align: center;
     }
 
   </style>
@@ -369,7 +372,7 @@
       videoContainer.appendChild(renderer.domElement);
 
       effect = new THREE.StereoEffect(renderer);
-      effect.setSize(container.clientWidth + 100, container.clientHeight);
+      effect.setSize(container.clientWidth, container.clientHeight);
 
 
       // renderer.setClearColorHex(0x000000, 0); Ignore this, I haven't really figured out what it does.
@@ -462,9 +465,9 @@
       leftUI.style.top = 250+'px';
       rightUI.style.right = 100+'px';
       leftUI.style.left = 100+'px';
-      rightUI.style.color = arUI.background;
+      rightUI.id = 'rightUI';
       leftUI.id = 'leftUI';
-      // videoContainer.appendChild(rightUI);
+      videoContainer.appendChild(rightUI);
       videoContainer.appendChild(leftUI);
 
     }
