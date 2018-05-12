@@ -171,9 +171,10 @@
 
   <script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
   <script src="webapp.js" type="text/javascript"></script>
+
   <script>
-  </script>
-  <script>
+
+  //Code for determining it the user is viewing the app on an iPhone
 
     var isMobile = {
       iOS: function() {
@@ -493,7 +494,14 @@
 
 
   </script>
+  <script>
+  $('#fullScreen').click(function() {
+    $('#rightUI').hide().delay(2000).fadeIn(500);
+    $('#leftUI').hide().delay(2000).fadeIn(500);
 
+  });
+
+  </script>
 </body>
 
 
