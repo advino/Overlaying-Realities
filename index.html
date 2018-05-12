@@ -203,6 +203,7 @@
     ]
 
     //Info object stores the lat longitude and name of the area specified
+    //UPDATE this may no longer be necessary see arUI object!
 
     var infoCard = function(lat, lon, name) {
       this.lat = lat;
@@ -368,7 +369,7 @@
 
       //Code for Three.js camera
       var aspect = container.clientWidth / container.clientHeight; //This is basically saying that our Three.js canvas takes up the entire div space
-      camera = new THREE.PerspectiveCamera(35, aspect, 1, 3000);
+      camera = new THREE.PerspectiveCamera(35, aspect, 1, 4000);
       camera.position.z = 600;
 
       scene = new THREE.Scene();
@@ -424,7 +425,41 @@
       requestAnimationFrame(animate);
     }
 
+    //This is the updated version of the notifications
 
+    var arUI = {
+      info: 'Welcome to Overlaying Realites',
+      display: {
+        width: 100+'px',
+        height: 100+'px',
+        background: 'white',
+        top: null,
+        right: null,
+        left: null
+      }
+    }
+
+    function createUI() {
+      var rightUI = document.createElement('div');
+      var leftUI = document.createElement('div');
+      rightUI.innerHTML = arUI.info;
+      leftUI.innerHTML = arUI.info;
+      rightUI.style.width = arUI.display.width;
+      leftUI.style.width = arUI.display.width;
+      rightUI.style.height = arUI.display.height;
+      leftUI.style.height = arUI.display.height;
+      rightUI.style.position = 'absolute';
+      leftUI.style.position = 'absolute';
+      rightUI.style.top = 250+'px';
+      leftUI.style.top = 250+'px';
+      rightUI.style.right = 100+'px';
+      leftUI.style.left = 100+'px';
+      rightUI.style.color = arUI.background;
+      leftUI.style.color = arUI.background;
+      videoContainer.appendChild(rightUI);
+      videoContainer.appendChild(leftUI);
+
+    }
 
     // Some code to append the video to the main container and to make the element fullscreen
 
@@ -436,6 +471,7 @@
       contain.insertBefore(videoContainer, fullScreen);
       // videoContainer.webkitRequestFullScreen();
       canvas = document.querySelector('canvas');
+      createUI();
       videoContainer.webkitRequestFullScreen();
       // getLocation(); This is what basically gets us the locational data and triggers
 
