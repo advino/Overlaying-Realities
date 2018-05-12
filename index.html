@@ -128,7 +128,13 @@
       height: auto;
     }
 
-
+    #leftUI {
+      background-color: white;
+      padding: 2px;
+      opacity: .75;
+      text-align: center;
+      
+    }
 
   </style>
 
@@ -457,7 +463,7 @@
       rightUI.style.right = 100+'px';
       leftUI.style.left = 100+'px';
       rightUI.style.color = arUI.background;
-      leftUI.style.color = arUI.background;
+      leftUI.id = 'leftUI';
       // videoContainer.appendChild(rightUI);
       videoContainer.appendChild(leftUI);
 
