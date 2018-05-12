@@ -315,8 +315,8 @@
         audio: false,
         video: {
           deviceId: videoSource,
-          width: 1920,
-          height: 1080
+          // width: 1920,
+          // height: 1080
         }
       }
 
@@ -426,7 +426,8 @@
       // videoContainer.webkitRequestFullScreen();
       canvas = document.querySelector('canvas');
       canvas.webkitRequestFullScreen();
-      // getLocation();
+      // getLocation(); This is what basically gets us the locational data and triggers
+
       // noteBar.addEventListener('click', getLocation)
 
     });
