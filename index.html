@@ -522,8 +522,8 @@
     $('#leftUI').hide().delay(3000).fadeIn().animate({
       top: '250px',
     }).delay(2000).fadeOut(function() {
-      rightUI.innerHTML = '<span style="text-align: center">Loading reality...</span>';
-      leftUI.innerHTML = '<span style="text-align: center">Loading reality...</span>';
+      rightUI.innerHTML = '<span>Loading reality...</span>';
+      leftUI.innerHTML = '<span>Loading reality...</span>';
       $("#leftUI").delay(1000).fadeIn().delay(2000).fadeOut();
       $("#rightUI").delay(1000).fadeIn().delay(2000).fadeOut(function() {
         $('#onboardBG').fadeOut(1000);
