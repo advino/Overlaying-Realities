@@ -150,6 +150,7 @@
       font-family: Maison Neue;
       font-weight: 800;
       font-size: 18px;
+      color: white;
     }
 
     #rightUI {
@@ -163,6 +164,7 @@
       font-family: Maison Neue;
       font-weight: 800;
       font-size: 18px;
+      color: white;
     }
 
   </style>
@@ -520,7 +522,12 @@
     $('#leftUI').hide().delay(3000).fadeIn().animate({
       top: '250px',
     }).delay(2000).fadeOut(function() {
-      $('#onboardBG').fadeOut(1000);
+      rightUI.innerHTML = '<span style="text-align: center">Loading reality...</span>';
+      leftUI.innerHTML = '<span style="text-align: center">Loading reality...</span>';
+      $("#leftUI").delay(1000).fadeIn().delay(2000).fadeOut();
+      $("#rightUI").delay(1000).fadeIn().delay(2000).fadeOut(function() {
+        $('#onboardBG').fadeOut(1000);
+      });
 
     });
 
