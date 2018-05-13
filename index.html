@@ -498,10 +498,10 @@
   $('#fullScreen').click(function() {
     $('#rightUI').hide().delay(3000).fadeIn().animate({
       top: '250px',
-    });
+    }).delay(500).fadeOut();
     $('#leftUI').hide().delay(3000).fadeIn().animate({
       top: '250px',
-    });
+    }).delay(500).fadeOut();
 
   });
 
