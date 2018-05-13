@@ -20,6 +20,12 @@
 
     @font-face {
       font-family: Maison Neue;
+      src: url(maisonneue-bold.ttf);
+      font-weight: 800;
+    }
+
+    @font-face {
+      font-family: Maison Neue;
       src: url(maisonneue-mono.ttf);
       font-weight: 100;
     }
@@ -124,19 +130,39 @@
       height: auto;
     }
 
-    #leftUI {
-      background-color: white;
-      padding: 2px;
-      opacity: .75;
-      text-align: center;
+    #onboardBG {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: black;
+    }
 
+    #leftUI {
+      width: auto;
+      height: auto;
+      position: absolute;
+      top: 250px;
+      left: 100px;
+      /* background-color: white; */
+      padding: 2px;
+      font-family: Maison Neue;
+      font-weight: 800;
+      font-size: 18px;
     }
 
     #rightUI {
-      background-color: white;
+      width: auto;
+      height: auto;
+      position: absolute;
+      top: 250px;
+      right: 100px;
+      /* background-color: white; */
       padding: 2px;
-      opacity: .75;
-      text-align: center;
+      font-family: Maison Neue;
+      font-weight: 800;
+      font-size: 18px;
     }
 
   </style>
@@ -274,8 +300,6 @@
       card.innerHTML = "Latitude: " + info.lat + "<br>Longitude: " + info.lon + "<br>Name: " + info.name;
       card.id = "infoCard";
       videoContainer.appendChild(card);
-      // $('infoCard').hide().delay(250).fadeIn(500);
-
     }
 
     // Some code to check if the current device can access user media
@@ -440,7 +464,7 @@
     //This is the updated version of the notifications
 
     var arUI = {
-      info: 'Welcome to Overlaying Realites',
+      info: '<span style="color: #F5D328">Overlaying<span style="color: #FFFFFF">/</span></span><br><span style="color: #51A7F9">Realites</span>',
       display: {
         width: 100+'px',
         height: 100+'px',
@@ -452,22 +476,15 @@
     }
 
     function createUI() {
-      var rightUI = document.createElement('div');
-      var leftUI = document.createElement('div');
+      var rightUI = document.createElement('p');
+      var leftUI = document.createElement('p');
+      var onboardBG = document.createElement('div');
+      onboardBG.id = 'onboardBG';
       rightUI.innerHTML = arUI.info;
       leftUI.innerHTML = arUI.info;
-      rightUI.style.width = arUI.display.width;
-      leftUI.style.width = arUI.display.width;
-      rightUI.style.height = arUI.display.height;
-      leftUI.style.height = arUI.display.height;
-      rightUI.style.position = 'absolute';
-      leftUI.style.position = 'absolute';
-      rightUI.style.top = 350 + 'px';
-      leftUI.style.top = 350 +'px';
-      rightUI.style.right = 100+'px';
-      leftUI.style.left = 100+'px';
       rightUI.id = 'rightUI';
       leftUI.id = 'leftUI';
+      videoContainer.appendChild(onboardBG);
       videoContainer.appendChild(rightUI);
       videoContainer.appendChild(leftUI);
 
@@ -498,10 +515,15 @@
   $('#fullScreen').click(function() {
     $('#rightUI').hide().delay(3000).fadeIn().animate({
       top: '250px',
-    }).delay(500).fadeOut();
+    }).delay(2000).fadeOut();
+
     $('#leftUI').hide().delay(3000).fadeIn().animate({
       top: '250px',
-    }).delay(500).fadeOut();
+    }).delay(2000).fadeOut(function() {
+      $('#onboardBG').fadeOut(1000);
+
+    });
+
 
   });
 
