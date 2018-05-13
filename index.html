@@ -462,8 +462,8 @@
       leftUI.style.height = arUI.display.height;
       rightUI.style.position = 'absolute';
       leftUI.style.position = 'absolute';
-      rightUI.style.top = 250+'px';
-      leftUI.style.top = 250+'px';
+      rightUI.style.top = 350 + 'px';
+      leftUI.style.top = 350 +'px';
       rightUI.style.right = 100+'px';
       leftUI.style.left = 100+'px';
       rightUI.id = 'rightUI';
@@ -496,8 +496,12 @@
   </script>
   <script>
   $('#fullScreen').click(function() {
-    $('#rightUI').hide().delay(3000).slideDown(500);
-    $('#leftUI').hide().delay(3000).slideDown(500);
+    $('#rightUI').hide().delay(3000).fadeIn().animate({
+      top: '250px',
+    });
+    $('#leftUI').hide().delay(3000).fadeIn().animate({
+      top: '250px',
+    });
 
   });
 
