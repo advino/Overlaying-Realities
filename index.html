@@ -314,10 +314,10 @@
 
         if (distance <= 50) {
           console.log("Current Zone: " + locationData[i][2] + " Distance: " + distance);
-          if (location[i][3] == false) {
+          if (locationData[i][3] == false) {
             createNote(locationData[i][2]);
             cardAnimate();
-            location[i][3] = true;
+            locationData[i][3] = true;
           }
         } else {
           locationData[i][3] = false;
