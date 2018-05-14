@@ -304,6 +304,9 @@
 
     //Some code to cycle through the location data, if current location matches a target then a notification is created.
 
+    //This check variable has to be global
+    var cardActive = false;
+
     function checkLocation(crds) {
 
       for(var i = 0; i < locationData.length; i++) {
@@ -314,6 +317,9 @@
             createNote(locationData[i][2]);
             cardAnimate();
 
+
+        } else {
+          cardActive = false;
         }
       }
 
@@ -352,8 +358,12 @@
     }
 
     function cardAnimate() {
+      if(!cardActive) {
         console.log('loading card');
-        $('.infoCard').hide().fadeIn(3000);
+        $('.infoCard').hide().slideDown(1000).delay(2000).remove();
+        cardActive = true;
+      }
+
     }
 
 
