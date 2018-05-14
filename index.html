@@ -358,10 +358,12 @@
     }
 
     function cardAnimate() {
-      if(!cardActive) {
+      if(cardActive == false) {
         console.log('loading card');
-        $('.infoCard').hide().slideDown(1000).delay(2000).remove();
-        cardActive = true;
+        $('.infoCard').hide().slideDown(1000).delay(1000).fadeOut(function() {
+          cardActive = true;
+        });
+
       }
 
     }
