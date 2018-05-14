@@ -166,7 +166,6 @@
       font-size: 18px;
       color: white;
     }
-
   </style>
 
 </head>
@@ -205,7 +204,6 @@
   <!-- Main script -->
 
   <script>
-
     //GENERAL SETUP CODE
 
     //Code for determining it the user is viewing the app on an iPhone
@@ -216,7 +214,7 @@
       }
     }
 
-    if(isMobile.iOS()) {
+    if (isMobile.iOS()) {
       alert('This app currently is not compatible with iPhone! Sorry!');
     }
 
@@ -252,9 +250,11 @@
     //Array for location data. Includes latitude, longitude, and the name of the location
 
     var locationData = [
-      [41.823256, -71.406153, "ID Building"], //Lat Min, Lat Max, Lon Min, Lon Max, Location
-      [41.822696, -71.405448, "Architecture Building"]
+      [41.823256, -71.406153, "ID Building", false], //Target Lat, Target Lon, Location Name, In Zone?
+      [41.822696, -71.405448, "Architecture Building", false]
     ]
+
+
 
     //infoCard is the object for all notifications
 
@@ -266,9 +266,9 @@
         location.innerHTML = name;
         element.appendChild(location);
         element.className = 'infoCard';
-        if(side == "right") {
+        if (side == "right") {
           element.style.right = '100px';
-        } else if(side == "left") {
+        } else if (side == "left") {
           element.style.left = '100px';
         }
         return element;
@@ -309,20 +309,18 @@
 
     function checkLocation(crds) {
 
-      for(var i = 0; i < locationData.length; i++) {
+      for (var i = 0; i < locationData.length; i++) {
         var distance = locDistance(crds, locationData[i][0], locationData[i][1]);
 
-        if(distance <= 50) {
+        if (distance <= 50) {
           console.log("Current Zone: " + locationData[i][2] + " Distance: " + distance);
-            if(inZone == false) {
-              createNote(locationData[i][2]);
-              cardAnimate();
-              inZone = true;
-            }
-
-
+          if (location[i][3] == false) {
+            createNote(locationData[i][2]);
+            cardAnimate();
+            location[i][3] = true;
+          }
         } else {
-          inZone = false;
+          locationData[i][3] = false;
         }
       }
 
@@ -330,24 +328,23 @@
 
 
     //Some code to calculate the distance from a target point
-    function locDistance(crds, targetLat,targetLon) {
-        var r = 6371;
-        var dLat = deg2Rad(targetLat - crds.latitude.toFixed(6));
-        var dLon = deg2Rad(targetLon - crds.longitude.toFixed(6));
-        var a =
-          Math.sin(dLat/2) * Math.sin(dLat/2) +
-          Math.cos(deg2Rad(crds.latitude.toFixed(6))) * Math.cos(deg2Rad(targetLat)) *
-          Math.sin(dLon/2) * Math.sin(dLon/2)
-          ;
-        var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-        var d = r * c;
-        return d * 1000;
+    function locDistance(crds, targetLat, targetLon) {
+      var r = 6371;
+      var dLat = deg2Rad(targetLat - crds.latitude.toFixed(6));
+      var dLon = deg2Rad(targetLon - crds.longitude.toFixed(6));
+      var a =
+        Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+        Math.cos(deg2Rad(crds.latitude.toFixed(6))) * Math.cos(deg2Rad(targetLat)) *
+        Math.sin(dLon / 2) * Math.sin(dLon / 2);
+      var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+      var d = r * c;
+      return d * 1000;
     }
 
     //Some code to calculate degrees to radians
     function deg2Rad(deg) {
 
-      return deg * (Math.PI/180);
+      return deg * (Math.PI / 180);
     }
 
 
@@ -362,10 +359,8 @@
 
     function cardAnimate() {
 
-        console.log('loading card');
-        $('.infoCard').hide().slideDown(1000).delay(1000).fadeOut(function() {
-          inZone = true;
-        });
+      console.log('loading card');
+      $('.infoCard').hide().slideDown(1000).delay(1000).fadeOut();
 
     }
 
@@ -537,8 +532,8 @@
     var arUI = {
       info: '<span style="color: #F5D328">Overlaying<span style="color: #FFFFFF">/</span></span><br><span style="color: #51A7F9">Realites</span>',
       display: {
-        width: 100+'px',
-        height: 100+'px',
+        width: 100 + 'px',
+        height: 100 + 'px',
         background: 'white',
         top: null,
         right: null,
@@ -578,41 +573,37 @@
       videoContainer.webkitRequestFullScreen();
 
     });
-
   </script>
 
   <!-- Onboading script -->
 
   <script>
-  $('#fullScreen').click(function() {
-    $('#rightUI').hide().delay(3000).fadeIn().animate({
-      top: '250px',
-    }).delay(2000).fadeOut();
+    $('#fullScreen').click(function() {
+      $('#rightUI').hide().delay(3000).fadeIn().animate({
+        top: '250px',
+      }).delay(2000).fadeOut();
 
-    $('#leftUI').hide().delay(3000).fadeIn().animate({
-      top: '250px',
-    }).delay(2000).fadeOut(function() {
-      rightUI.innerHTML = '<span style="font-size: 12px">Loading reality...</span>';
-      leftUI.innerHTML = '<span style="font-size: 12px">Loading reality...</span>';
-      $("#leftUI").delay(1000).fadeIn().delay(2000).fadeOut();
-      $("#rightUI").delay(1000).fadeIn().delay(2000).fadeOut(function() {
-        $('#onboardBG').fadeOut(1000).delay(2000, function() {
-          getLocation(); //This is what basically gets us the locational data and triggers
+      $('#leftUI').hide().delay(3000).fadeIn().animate({
+        top: '250px',
+      }).delay(2000).fadeOut(function() {
+        rightUI.innerHTML = '<span style="font-size: 12px">Loading reality...</span>';
+        leftUI.innerHTML = '<span style="font-size: 12px">Loading reality...</span>';
+        $("#leftUI").delay(1000).fadeIn().delay(2000).fadeOut();
+        $("#rightUI").delay(1000).fadeIn().delay(2000).fadeOut(function() {
+          $('#onboardBG').fadeOut(1000).delay(2000, function() {
+            getLocation(); //This is what basically gets us the locational data and triggers
+          });
+
         });
 
       });
 
     });
-
-  });
-
   </script>
 
-    <!-- Code for loading notifications -->
+  <!-- Code for loading notifications -->
 
   <script>
-
-
   </script>
 
 
