@@ -312,6 +312,8 @@
         if(distance <= 50) {
           console.log("Current Zone: " + locationData[i][2] + " Distance: " + distance);
             createNote(locationData[i][2]);
+            cardAnimate();
+
         }
       }
 
@@ -347,6 +349,11 @@
       var notificationRight = new infoCard(name, 'right');
       videoContainer.appendChild(notificationLeft.display());
       videoContainer.appendChild(notificationRight.display());
+    }
+
+    function cardAnimate() {
+        console.log('loading card');
+        $('.infoCard').hide().fadeIn(3000);
     }
 
 
@@ -587,6 +594,15 @@
   });
 
   </script>
+
+    <!-- Code for loading notifications -->
+
+  <script>
+
+
+  </script>
+
+
 </body>
 
 
