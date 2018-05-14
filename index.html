@@ -241,6 +241,8 @@
     videoContainer.id = 'videoContainer';
 
     var loadingdone = false;
+    //This check variable has to be global
+    var inZone = false;
 
 
     //GEOLOCATION CODE
@@ -304,8 +306,6 @@
 
     //Some code to cycle through the location data, if current location matches a target then a notification is created.
 
-    //This check variable has to be global
-    var cardActive = false;
 
     function checkLocation(crds) {
 
@@ -315,11 +315,14 @@
         if(distance <= 50) {
           console.log("Current Zone: " + locationData[i][2] + " Distance: " + distance);
             createNote(locationData[i][2]);
-            cardAnimate();
+            if(inZone == false) {
+              cardAnimate();
+              inZone = true;
+            }
 
 
         } else {
-          cardActive = false;
+          inZone = false;
         }
       }
 
@@ -358,13 +361,11 @@
     }
 
     function cardAnimate() {
-      if(cardActive == false) {
+
         console.log('loading card');
         $('.infoCard').hide().slideDown(1000).delay(1000).fadeOut(function() {
-          cardActive = true;
+          inZone = true;
         });
-
-      }
 
     }
 
