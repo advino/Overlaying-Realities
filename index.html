@@ -259,7 +259,7 @@
 
     var heatZoneAlert = "Caution! You are entering a heat zone! Prolonged exposure to high temperatures can result in serious health effects!"
     var duration = 60;
-    var counter = 30;
+    var counter = 0;
     var death = false;
 
     var checkDeath = setInterval(function() {
@@ -647,11 +647,11 @@
 
   <script>
     $('#fullScreen').click(function() {
-      $('#rightUI').hide().delay(3000).fadeIn().animate({
+      $('#rightUI').hide().delay(5000).fadeIn().animate({
         top: '250px',
       }).delay(6000).fadeOut();
 
-      $('#leftUI').hide().delay(3000).fadeIn().animate({
+      $('#leftUI').hide().delay(5000).fadeIn().animate({
         top: '250px',
       }).delay(6000).fadeOut(function() {
         rightUI.innerHTML = '<span style="font-size: 12px">Loading reality...</span>';
