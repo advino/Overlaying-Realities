@@ -128,6 +128,7 @@
     #videoContainer {
       width: auto;
       height: auto;
+      background-color:  black;
     }
 
     #onboardBG {
@@ -254,22 +255,35 @@
       [41.822696, -71.405448, "Architecture Building", false]
     ]
 
+    //Standard text to alert when in heat zone
 
+    var heatZoneAlert = "Caution! You are entering a heat zone! Prolonged exposure to high temperatures can result in serious health effects!"
+    var duration = 60;
+    var counter = 30;
+    var death = false;
+
+    var checkDeath = setInterval(function() {
+      if(death == true) {
+        console.log("You are dead!");
+        end();
+        clearInterval(checkDeath);
+      }
+    }, 1000);
 
     //infoCard is the object for all notifications
 
-    var infoCard = function(name, side) {
-      this.name = name;
+    var infoCard = function(text, side) {
+      this.name = text;
       this.display = function() {
         var element = document.createElement('div');
-        var location = document.createElement('p');
-        location.innerHTML = name;
-        element.appendChild(location);
+        var cardText = document.createElement('p');
+        cardText.innerHTML = text;
+        element.appendChild(cardText);
         element.className = 'infoCard';
         if (side == "right") {
-          element.style.right = '100px';
+          element.style.left = canvas.width / 2 + 75 + 'px';
         } else if (side == "left") {
-          element.style.left = '100px';
+          element.style.left = '75px';
         }
         return element;
       };
@@ -317,7 +331,9 @@
           if (locationData[i][3] == false) {
             createNote(locationData[i][2]);
             cardAnimate();
+            heatCounter();
             locationData[i][3] = true;
+
           }
         } else {
           locationData[i][3] = false;
@@ -356,6 +372,55 @@
       videoContainer.appendChild(notificationLeft.display());
       videoContainer.appendChild(notificationRight.display());
     }
+
+    function end() {
+      var onboard = document.getElementById('onboardBG');
+      onboard.style.display = 'block';
+      $('#onboardBG').fadeIn(1000);
+      leftUI.innerHTML = '<span style="font-size: 12px">Death...</span>';
+      rightUI.innerHTML = '<span style="font-size: 12px">Death...</span>'
+      $('#leftUI').delay(1000).fadeIn();
+      $('#rightUI').delay(1000).fadeIn();
+    }
+
+
+    //Code for creating a countdown sequence in heat zones
+
+    function heatCounter() {
+      console.log(heatZoneAlert);
+      var h = setInterval(count, 1000);
+
+      function count() {
+        if (counter >= 60) {
+          console.log("You have died of heatstroke");
+          counter = 0;
+          clearInterval(h); //insert the initialized variable here!
+          var currentCards = videoContainer.querySelectorAll('div.infoCard');
+          currentCards.forEach(function(card) {
+            videoContainer.removeChild(card);
+          });
+
+          death = true;
+
+        } else if (counter >= 30) {
+          var remainder = duration - counter;
+          var currentCards = videoContainer.querySelectorAll('div.infoCard');
+          currentCards.forEach(function(card) {
+            videoContainer.removeChild(card);
+          });
+          createNote(remainder);
+          console.log("You have " + remainder + " seconds till heatstroke!");
+        }
+
+        counter++;
+      }
+
+
+
+    }
+
+
+
 
     function cardAnimate() {
 
@@ -557,6 +622,8 @@
     }
 
 
+
+
     //APP LAUNCH CODE
 
 
@@ -569,6 +636,7 @@
 
       //All I'm doing here is just saying that every time I click the canvas it goes fullscreen
       canvas = document.querySelector('canvas');
+
       createUI();
       videoContainer.webkitRequestFullScreen();
 
@@ -601,7 +669,9 @@
     });
   </script>
 
-  <!-- Code for loading notifications -->
+
+
+  <!-- Ending Script -->
 
   <script>
   </script>
