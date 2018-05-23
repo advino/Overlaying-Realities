@@ -96,30 +96,18 @@
       width: 75%;
     }
 
-    #noteBar {
-      display: block;
-      padding: 5px;
-      opacity: .75;
-      position: absolute;
-      background: white;
-      width: auto;
-      height: auto;
-      max-width: 25%;
-      max-height: 20%;
-      top: 80px;
-      right: 40px;
-    }
 
-    #textDisplay {
+    .textDisplay {
       display: block;
       font-family: Maison Neue;
-      font-style: 10px;
+      font-size: 10px;
       word-wrap: break-word;
     }
 
     .infoCard {
       position: absolute;
-      width: 150px;
+      padding: 5px;
+      width: 200px;
       height: 100px;
       background-color: white;
       top: 250px;
@@ -167,6 +155,8 @@
       font-size: 18px;
       color: white;
     }
+
+
   </style>
 
 </head>
@@ -223,10 +213,7 @@
 
     var fullScreen = document.getElementById('fullScreen');
     var contain = document.getElementById('container');
-    var noteBar = document.createElement('div');
-    noteBar.id = 'noteBar';
-    var display = document.createElement('p');
-    display.id = 'textDisplay';
+
     var video = document.createElement('video');
     video.style.display = 'none';
     video.style.width = '100%';
@@ -257,7 +244,7 @@
 
     //Standard text to alert when in heat zone
 
-    var heatZoneAlert = "Caution! You are entering a heat zone! Prolonged exposure to high temperatures can result in serious health effects!"
+    var heatZoneAlert = '<span style="font-size: 14px; font-weight: 800; color: red;">Caution!</span></br></br>You are entering a heat zone! Prolonged exposure to high temperatures can result in serious health effects!'
     var duration = 60;
     var counter = 0;
     var death = false;
@@ -277,13 +264,14 @@
       this.display = function() {
         var element = document.createElement('div');
         var cardText = document.createElement('p');
+        cardText.className = "textDisplay";
         cardText.innerHTML = text;
         element.appendChild(cardText);
         element.className = 'infoCard';
         if (side == "right") {
-          element.style.left = canvas.width / 2 + 75 + 'px';
+          element.style.left = canvas.width / 2 + 50 + 'px';
         } else if (side == "left") {
-          element.style.left = '75px';
+          element.style.left = '50px';
         }
         return element;
       };
@@ -329,7 +317,7 @@
         if (distance <= 50) {
           console.log("Current Zone: " + locationData[i][2] + " Distance: " + distance);
           if (locationData[i][3] == false) {
-            createNote(locationData[i][2]);
+            createNote(heatZoneAlert);
             cardAnimate();
             heatCounter();
             locationData[i][3] = true;
@@ -425,7 +413,7 @@
     function cardAnimate() {
 
       console.log('loading card');
-      $('.infoCard').hide().slideDown(1000).delay(1000).fadeOut();
+      $('.infoCard').hide().fadeIn(1000).delay(6000).fadeOut(1000);
 
     }
 
