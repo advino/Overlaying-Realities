@@ -244,7 +244,6 @@
 
     //Standard text to alert when in heat zone
 
-    var heatZoneAlert = '<span style="font-size: 14px; font-weight: 800; color: red;">Caution!</span></br></br>You are entering a heat zone! Prolonged exposure to high temperatures can result in serious health effects!'
     var duration = 60;
     var counter = 0;
     var death = false;
@@ -317,11 +316,11 @@
         if (distance <= 50) {
           console.log("Current Zone: " + locationData[i][2] + " Distance: " + distance);
           if (locationData[i][3] == false) {
+            var heatZoneAlert = '<span style="font-size: 13px; font-weight: 800; color: red;">Entering Heat Zone: </span>' + locationData[i][2] + '</br></br>You are entering a heat zone! Prolonged exposure to high temperatures can result in serious health effects!'
             createNote(heatZoneAlert);
             cardAnimate();
             heatCounter();
             locationData[i][3] = true;
-
           }
         } else {
           locationData[i][3] = false;
@@ -375,7 +374,7 @@
     //Code for creating a countdown sequence in heat zones
 
     function heatCounter() {
-      console.log(heatZoneAlert);
+      console.log('starting counter');
       var h = setInterval(count, 1000);
 
       function count() {
