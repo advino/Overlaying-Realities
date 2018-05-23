@@ -116,7 +116,7 @@
     #videoContainer {
       width: auto;
       height: auto;
-      background-color:  black;
+      background-color: black;
     }
 
     #onboardBG {
@@ -154,6 +154,7 @@
       font-weight: 800;
       font-size: 18px;
       color: white;
+
     }
 
 
@@ -207,6 +208,13 @@
 
     if (isMobile.iOS()) {
       alert('This app currently is not compatible with iPhone! Sorry!');
+      container.style.display = 'none';
+      var iphone = document.createElement('div');
+      var iphoneText = document.createElement('p');
+      iphoneText.innerHTML = "This app isn't compatible with iPhone right now. </br></br>Sorry about that!";
+      iphone.appendChild(iphoneText);
+      iphone.style.margin = 'auto';
+      document.body.appendChild(iphone);
     }
 
     // DOM Elements
@@ -242,13 +250,14 @@
       [41.822696, -71.405448, "Architecture Building", false]
     ]
 
-    //Standard text to alert when in heat zone
+    //Variables for heat zone ineteractions
 
-    var duration = 60;
-    var counter = 0;
-    var death = false;
+    var duration = 60; //This is how long you can survive in a heat zone
+    var counter = 0; //Counter increases in seconds
+    var death = false; //variable returns true when you are "dead"
+    var h; //variable for the setInterval function
 
-    var checkDeath = setInterval(function() {
+    var checkDeath = setInterval(function() { //this is just checking if you're dead or not lmao
       if(death == true) {
         console.log("You are dead!");
         end();
@@ -268,9 +277,9 @@
         element.appendChild(cardText);
         element.className = 'infoCard';
         if (side == "right") {
-          element.style.left = canvas.width / 2 + 50 + 'px';
+          element.style.left = canvas.width/2 + 40 + 'px';
         } else if (side == "left") {
-          element.style.left = '50px';
+          element.style.left = '40px';
         }
         return element;
       };
@@ -316,6 +325,7 @@
         if (distance <= 50) {
           console.log("Current Zone: " + locationData[i][2] + " Distance: " + distance);
           if (locationData[i][3] == false) {
+            clearInterval(h);
             var heatZoneAlert = '<span style="font-size: 13px; font-weight: 800; color: red;">Entering Heat Zone: </span>' + locationData[i][2] + '</br></br>You are entering a heat zone! Prolonged exposure to high temperatures can result in serious health effects!'
             createNote(heatZoneAlert);
             cardAnimate();
@@ -323,6 +333,13 @@
             locationData[i][3] = true;
           }
         } else {
+          if(locationData[i][3] == true) {
+            clearInterval(h);
+            var currentCards = videoContainer.querySelectorAll('div.infoCard');
+            curruentCards.forEach(function(card) {
+              videoContainer.appendChild(card);
+            });
+          }
           locationData[i][3] = false;
         }
       }
@@ -375,7 +392,7 @@
 
     function heatCounter() {
       console.log('starting counter');
-      var h = setInterval(count, 1000);
+      h = setInterval(count, 1000);
 
       function count() {
         if (counter >= 60) {
@@ -395,7 +412,7 @@
           currentCards.forEach(function(card) {
             videoContainer.removeChild(card);
           });
-          createNote(remainder);
+          createNote('<p style="font-size: 14px;">Time till heat stroke</p>' + '<p style="text-align: center; font-size: 22px;">' + remainder + "s</p>");
           console.log("You have " + remainder + " seconds till heatstroke!");
         }
 
